@@ -1,59 +1,171 @@
-/* A4 Print Stylesheet for Project Defense Report */
+/* Professional A4 Print Stylesheet for Solar & Diesel LCCA Executive Reports */
+@page {
+  size: A4 portrait;
+  margin: 12mm 10mm;
+}
+
 @media print {
-  body {
+  /* Reset page background and base typography */
+  html, body {
     background: #ffffff !important;
-    color: #000000 !important;
-    font-size: 11pt;
-    line-height: 1.4;
-  }
-
-  .no-print, header button, .preset-site-select {
-    display: none !important;
-  }
-
-  .container {
-    max-width: 100% !important;
+    color: #0f172a !important;
+    font-size: 10pt !important;
+    line-height: 1.4 !important;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif !important;
+    margin: 0 !important;
     padding: 0 !important;
   }
 
-  .app-header {
-    border-bottom: 2px solid #000000 !important;
-    padding-bottom: 8px !important;
-    margin-bottom: 15px !important;
+  /* Hide interactive web UI controls */
+  .no-print,
+  .app-header,
+  .view-nav,
+  .mobile-nav-toggle,
+  .mobile-nav-menu,
+  .pwa-banner,
+  #mobile-nav-dropdown,
+  button,
+  .btn,
+  .pill-btn,
+  .simulator-controls-bar,
+  .rack-status-bar,
+  .app-footer {
+    display: none !important;
+    visibility: hidden !important;
   }
 
-  .lcca-workspace {
+  /* Show only the active view content or report */
+  .container {
+    max-width: 100% !important;
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  .view-content {
+    display: none !important;
+  }
+
+  .view-content.active {
     display: block !important;
   }
 
-  .panel {
-    border: 1px solid #cccccc !important;
+  /* Paper Document Styling */
+  .report-paper, .main-card, .power-flow-card {
+    background: #ffffff !important;
+    border: 1px solid #cbd5e1 !important;
     box-shadow: none !important;
+    padding: 12px !important;
+    margin: 0 0 15px 0 !important;
+    border-radius: 4px !important;
     page-break-inside: avoid;
-    margin-bottom: 15px !important;
+    break-inside: avoid;
   }
 
-  .input-section-box {
+  .report-header {
+    border-bottom: 2px solid #0f172a !important;
+    padding-bottom: 8px !important;
+    margin-bottom: 12px !important;
+  }
+
+  .report-header h2 {
+    color: #0f172a !important;
+    font-size: 14pt !important;
+    margin: 4px 0 !important;
+  }
+
+  .report-meta-grid {
+    display: grid !important;
+    grid-template-columns: repeat(4, 1fr) !important;
+    gap: 8px !important;
+    background: #f8fafc !important;
     border: 1px solid #e2e8f0 !important;
+    padding: 8px 10px !important;
+    margin-bottom: 12px !important;
+    font-size: 9pt !important;
+  }
+
+  .report-section {
+    margin-bottom: 14px !important;
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+
+  .report-section-title {
+    font-size: 11pt !important;
+    color: #0f172a !important;
+    border-bottom: 1px solid #e2e8f0 !important;
+    padding-bottom: 4px !important;
+    margin-bottom: 8px !important;
+  }
+
+  /* Tables in Print Mode */
+  table, .report-table, .lcca-table {
+    width: 100% !important;
+    border-collapse: collapse !important;
+    margin-bottom: 10px !important;
+    font-size: 8.5pt !important;
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+
+  table th, .report-table th, .lcca-table th {
+    background: #f1f5f9 !important;
+    color: #0f172a !important;
+    border: 1px solid #94a3b8 !important;
+    padding: 5px 6px !important;
+    font-weight: 700 !important;
+    text-align: left !important;
+  }
+
+  table td, .report-table td, .lcca-table td {
+    background: #ffffff !important;
+    color: #1e293b !important;
+    border: 1px solid #cbd5e1 !important;
+    padding: 5px 6px !important;
+  }
+
+  /* Power Flow Diagram in Print */
+  .power-flow-architecture {
+    display: flex !important;
+    flex-direction: row !important;
+    gap: 6px !important;
     background: #ffffff !important;
   }
 
-  .results-banner {
-    background: #f0fdf4 !important;
-    border: 1px solid #16a34a !important;
+  .flow-box {
+    background: #ffffff !important;
+    border: 1px solid #64748b !important;
+    box-shadow: none !important;
+    padding: 6px !important;
+    color: #0f172a !important;
   }
 
-  .lcca-table {
-    border: 1px solid #000000 !important;
+  .flow-subsystem {
+    background: #f8fafc !important;
+    border: 1px solid #94a3b8 !important;
   }
 
-  .lcca-table th, .lcca-table td {
-    border: 1px solid #cccccc !important;
+  .flow-pill {
+    background: #f1f5f9 !important;
+    border: 1px solid #cbd5e1 !important;
+    color: #0f172a !important;
   }
 
-  .app-footer {
-    border-top: 1px solid #000000 !important;
-    margin-top: 20px !important;
-    padding-top: 10px !important;
+  /* Sign-off Approval Block */
+  .sign-off-block {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 40px !important;
+    margin-top: 25px !important;
+    padding-top: 15px !important;
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+
+  .sign-line {
+    border-top: 1px solid #0f172a !important;
+    width: 80% !important;
+    margin: 0 auto 6px auto !important;
   }
 }
