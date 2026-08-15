@@ -555,84 +555,94 @@
           </button>
         </div>
 
-        <!-- Single-line Connection Flow Diagram -->
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin: 1.5rem 0;">
-          
-          <!-- Block 1: Solar Array -->
-          <div style="background: var(--solar-bg); border: 2px solid var(--solar); border-radius: var(--radius-md); padding: 1rem; text-align: center; position: relative;">
-            <div style="font-size: 2rem;">☀️</div>
-            <h4 style="font-size: 0.95rem; color: var(--solar); margin: 0.3rem 0;">1. Solar Panel Array</h4>
-            <div style="font-size: 0.8rem; font-weight: 700; color: var(--text-main);" id="conn-solar-kw">12.0 kWp DC</div>
-            <div style="font-size: 0.725rem; color: var(--text-secondary); margin-top: 0.3rem;">String DC Cabling → PV Isolator Box</div>
-            <div style="margin-top: 0.5rem; background: #ffffff; border: 1px solid var(--solar-border); border-radius: 4px; padding: 0.25rem; font-size: 0.7rem; font-weight: 700;">
-              DC Bus: ~350V - 450V DC
+        <!-- Unified Dual-Source Power Flow Diagram Architecture -->
+        <div class="power-flow-card">
+          <div class="power-flow-legend-top">
+            <span class="flow-pill solar-pill">☀️ Solar Pathway: PV Panels ➔ 12kW Inverter ➔ MPPT Controller ➔ Battery & Load</span>
+            <span class="flow-pill gen-pill">⛽ Generator Pathway: Backup Generator ➔ MPPT Controller ➔ Battery & Load</span>
+          </div>
+
+          <div class="power-flow-architecture">
+            <!-- Col 1: Generation Sources -->
+            <div class="flow-inputs-col">
+              <!-- Pathway 1: Solar Subsystem -->
+              <div class="flow-subsystem solar-branch">
+                <div class="branch-tag solar-tag">☀️ Solar Power Input</div>
+                <div class="branch-nodes">
+                  <!-- Node 1: Panels -->
+                  <div class="flow-box node-solar">
+                    <div class="box-icon">☀️</div>
+                    <div class="box-title">1. Solar PV Array</div>
+                    <div class="box-val" id="conn-solar-kw">12.0 kWp DC</div>
+                    <div class="box-sub">String DC Cabling</div>
+                  </div>
+                  
+                  <div class="flow-arrow-h">➔</div>
+
+                  <!-- Node 2: Inverter -->
+                  <div class="flow-box node-inverter">
+                    <div class="box-icon">⚡</div>
+                    <div class="box-title">2. Pure Sine Inverter</div>
+                    <div class="box-val" id="conn-inverter-kva">12.0 kW Inverter</div>
+                    <div class="box-sub">DC/AC Power Stage</div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Pathway 2: Generator Subsystem -->
+              <div class="flow-subsystem gen-branch">
+                <div class="branch-tag gen-tag">⛽ Backup Generator Input</div>
+                <div class="branch-nodes">
+                  <div class="flow-box node-gen">
+                    <div class="box-icon">⛽</div>
+                    <div class="box-title">Backup Generator</div>
+                    <div class="box-val" id="conn-gen-kva">18.75 kVA Generator</div>
+                    <div class="box-sub">Automatic Transfer Switch</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Col 2: Convergence Arrow -->
+            <div class="flow-converge-col">
+              <div class="converge-arrow-text">Feeds Into ➔</div>
+            </div>
+
+            <!-- Col 3: Central Charge Controller -->
+            <div class="flow-hub-col">
+              <div class="flow-box node-hub">
+                <span class="hub-badge">CENTRAL REGULATOR</span>
+                <div class="box-icon">🎛️</div>
+                <div class="box-title">3. Charge Controller (MPPT)</div>
+                <div class="box-val" id="conn-mppt-amps">250A MPPT</div>
+                <div class="box-sub">Central Charge & Power Hub</div>
+              </div>
+            </div>
+
+            <!-- Col 4: Divergence Arrow -->
+            <div class="flow-diverge-col">
+              <div class="diverge-arrow-text">Distributes To ➔</div>
+            </div>
+
+            <!-- Col 5: Outputs (Battery & AC Load) -->
+            <div class="flow-outputs-col">
+              <!-- Output A: Battery Bank -->
+              <div class="flow-box node-battery">
+                <div class="box-icon">🔋</div>
+                <div class="box-title">4A. Battery Storage</div>
+                <div class="box-val" id="conn-batt-storage">82.8 kWh (48V)</div>
+                <div class="box-sub" id="conn-batt-packs">Lithium LiFePO4 Bank</div>
+              </div>
+
+              <!-- Output B: Building Load -->
+              <div class="flow-box node-load">
+                <div class="box-icon">💡</div>
+                <div class="box-title">4B. Building AC Loads</div>
+                <div class="box-val">230V / 400V AC</div>
+                <div class="box-sub">Lighting, Power & Equipment</div>
+              </div>
             </div>
           </div>
-
-          <!-- Connection Arrow 1 -->
-          <div style="display: flex; align-items: center; justify-content: center; font-size: 1.5rem; color: var(--primary);">
-            ➡️
-          </div>
-
-          <!-- Block 2: MPPT Charge Controller -->
-          <div style="background: var(--primary-bg); border: 2px solid var(--primary); border-radius: var(--radius-md); padding: 1rem; text-align: center;">
-            <div style="font-size: 2rem;">⚡</div>
-            <h4 style="font-size: 0.95rem; color: var(--primary); margin: 0.3rem 0;">2. MPPT Controller</h4>
-            <div style="font-size: 0.8rem; font-weight: 700; color: var(--text-main);" id="conn-mppt-amps">250A MPPT</div>
-            <div style="font-size: 0.725rem; color: var(--text-secondary); margin-top: 0.3rem;">Steps high voltage DC down to 48V Bus</div>
-            <div style="margin-top: 0.5rem; background: #ffffff; border: 1px solid var(--border); border-radius: 4px; padding: 0.25rem; font-size: 0.7rem; font-weight: 700;">
-              Efficiency: 98% Peak
-            </div>
-          </div>
-
-          <!-- Connection Arrow 2 -->
-          <div style="display: flex; align-items: center; justify-content: center; font-size: 1.5rem; color: var(--primary);">
-            ↕️
-          </div>
-
-          <!-- Block 3: Battery Energy Storage -->
-          <div style="background: var(--success-bg); border: 2px solid var(--success); border-radius: var(--radius-md); padding: 1rem; text-align: center;">
-            <div style="font-size: 2rem;">🔋</div>
-            <h4 style="font-size: 0.95rem; color: var(--success); margin: 0.3rem 0;">3. Battery Storage</h4>
-            <div style="font-size: 0.8rem; font-weight: 700; color: var(--text-main);" id="conn-batt-storage">82.8 kWh (48V)</div>
-            <div style="font-size: 0.725rem; color: var(--text-secondary); margin-top: 0.3rem;" id="conn-batt-packs">17 × 5.12kWh Lithium LiFePO4</div>
-            <div style="margin-top: 0.5rem; background: #ffffff; border: 1px solid var(--success-border); border-radius: 4px; padding: 0.25rem; font-size: 0.7rem; font-weight: 700;">
-              DoD: 85% Usable Energy
-            </div>
-          </div>
-
-          <!-- Connection Arrow 3 -->
-          <div style="display: flex; align-items: center; justify-content: center; font-size: 1.5rem; color: var(--primary);">
-            ➡️
-          </div>
-
-          <!-- Block 4: Inverter & AC Distribution -->
-          <div style="background: var(--bg-subtle); border: 2px solid var(--primary); border-radius: var(--radius-md); padding: 1rem; text-align: center;">
-            <div style="font-size: 2rem;">🎛️</div>
-            <h4 style="font-size: 0.95rem; color: var(--primary); margin: 0.3rem 0;">4. Pure Sine Inverter</h4>
-            <div style="font-size: 0.8rem; font-weight: 700; color: var(--text-main);" id="conn-inverter-kva">12.0 kW Inverter</div>
-            <div style="font-size: 0.725rem; color: var(--text-secondary); margin-top: 0.3rem;">DC to 230V AC Pure Sine Wave</div>
-            <div style="margin-top: 0.5rem; background: var(--bg-card); border: 1px solid var(--border); border-radius: 4px; padding: 0.25rem; font-size: 0.7rem; font-weight: 700;">
-              Output: 230V AC @ 50Hz
-            </div>
-          </div>
-
-          <!-- Connection Arrow 4 -->
-          <div style="display: flex; align-items: center; justify-content: center; font-size: 1.5rem; color: var(--primary);">
-            ⚡
-          </div>
-
-          <!-- Block 5: Backup Diesel Generator -->
-          <div style="background: var(--diesel-bg); border: 2px solid var(--diesel); border-radius: var(--radius-md); padding: 1rem; text-align: center;">
-            <div style="font-size: 2rem;">⛽</div>
-            <h4 style="font-size: 0.95rem; color: var(--diesel); margin: 0.3rem 0;">5. Backup Generator</h4>
-            <div style="font-size: 0.8rem; font-weight: 700; color: var(--text-main);" id="conn-gen-kva">18.75 kVA Generator</div>
-            <div style="font-size: 0.725rem; color: var(--text-secondary); margin-top: 0.3rem;">Automatic Transfer Switch (ATS)</div>
-            <div style="margin-top: 0.5rem; background: var(--bg-card); border: 1px solid var(--diesel-border); border-radius: 4px; padding: 0.25rem; font-size: 0.7rem; font-weight: 700;">
-              Fuel: Diesel 230V/400V AC
-            </div>
-          </div>
-
         </div>
 
         <!-- Detailed Connection Specifications Table -->
@@ -655,28 +665,34 @@
                 <td>1000V DC Surge Protector (SPD) + 32A DC MCB</td>
               </tr>
               <tr>
-                <td><strong>2. Charge Controller (MPPT)</strong></td>
-                <td id="table-conn-mppt">250A MPPT Controller</td>
-                <td>35mm² / 50mm² Flexible Copper DC Cables</td>
-                <td>250A DC Circuit Breaker / MCCB</td>
+                <td><strong>2. Pure Sine Inverter</strong></td>
+                <td id="table-conn-inv">12.0 kW Pure Sine Wave Inverter</td>
+                <td>16mm² 3-Core Armored AC / DC Inversion Link</td>
+                <td>63A 2-Pole AC Breaker + Inverter Isolator</td>
               </tr>
               <tr>
-                <td><strong>3. Battery Bank (48V)</strong></td>
+                <td><strong>3. Backup Diesel Generator</strong></td>
+                <td id="table-conn-gen">18.75 kVA Diesel Generator</td>
+                <td>16mm² Armored Cable to ATS / Controller Link</td>
+                <td>63A Mains Changeover / Generator Breaker</td>
+              </tr>
+              <tr>
+                <td><strong>4. Charge Controller (MPPT)</strong></td>
+                <td id="table-conn-mppt">250A MPPT Controller</td>
+                <td>35mm² / 50mm² Flexible Copper DC Cables</td>
+                <td>250A DC Circuit Breaker / Central Distribution Hub</td>
+              </tr>
+              <tr>
+                <td><strong>5. Battery Storage Bank (48V)</strong></td>
                 <td id="table-conn-batt">82.8 kWh Storage Bank</td>
                 <td>70mm² Heavy Duty Battery Interconnectors</td>
                 <td>250A NH Fuse / Battery Isolator Switch</td>
               </tr>
               <tr>
-                <td><strong>4. Inverter & Changeover</strong></td>
-                <td id="table-conn-inv">15.0 kVA Pure Sine Inverter</td>
-                <td>16mm² 3-Core Armored AC Cable</td>
-                <td>63A 2-Pole AC Breaker + Dual Power ATS Switch</td>
-              </tr>
-              <tr>
-                <td><strong>5. Backup Generator</strong></td>
-                <td id="table-conn-gen">18.75 kVA Diesel Generator</td>
-                <td>16mm² Armored Cable to Automatic Transfer Switch</td>
-                <td>63A Mains Changeover / Generator Breaker</td>
+                <td><strong>6. Building AC Load Center</strong></td>
+                <td>230V / 400V AC Loads</td>
+                <td>10mm² / 16mm² Armored Sub-Mains Distribution Cable</td>
+                <td>Consumer Distribution Unit with Dual RCD & MCBs</td>
               </tr>
             </tbody>
           </table>

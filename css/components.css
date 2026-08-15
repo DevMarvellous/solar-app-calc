@@ -784,6 +784,226 @@ span, p, td, th {
   to { transform: translateY(0); opacity: 1; }
 }
 
+/* Dual-Input Power Flow Diagram Architecture */
+.power-flow-card {
+  background: var(--bg-card);
+  border: 2px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 1.25rem;
+  margin: 1.25rem 0;
+  box-shadow: var(--shadow);
+}
+
+.power-flow-legend-top {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-bottom: 1.25rem;
+  justify-content: center;
+}
+
+.flow-pill {
+  font-size: 0.8rem;
+  font-weight: 700;
+  padding: 0.4rem 0.85rem;
+  border-radius: 9999px;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.solar-pill {
+  background: var(--solar-bg);
+  color: var(--solar);
+  border: 1px solid var(--solar-border);
+}
+
+.gen-pill {
+  background: var(--diesel-bg);
+  color: var(--diesel);
+  border: 1px solid var(--diesel-border);
+}
+
+.power-flow-architecture {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.85rem;
+  position: relative;
+}
+
+.flow-inputs-col {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  flex: 1.2;
+}
+
+.flow-subsystem {
+  border-radius: var(--radius-md);
+  padding: 0.75rem;
+  border: 2px solid;
+}
+
+.solar-branch {
+  background: var(--solar-bg);
+  border-color: var(--solar);
+}
+
+.gen-branch {
+  background: var(--diesel-bg);
+  border-color: var(--diesel);
+}
+
+.branch-tag {
+  font-size: 0.75rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin-bottom: 0.4rem;
+}
+
+.solar-tag { color: var(--solar); }
+.gen-tag { color: var(--diesel); }
+
+.branch-nodes {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.flow-box {
+  background: var(--bg-card);
+  border: 2px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 0.75rem 0.5rem;
+  text-align: center;
+  flex: 1;
+  position: relative;
+  transition: transform 150ms ease, border-color 150ms ease;
+}
+
+.flow-box:hover {
+  transform: translateY(-2px);
+}
+
+.node-solar { border-color: var(--solar); }
+.node-inverter { border-color: var(--primary); }
+.node-gen { border-color: var(--diesel); }
+.node-hub { 
+  border-color: var(--primary); 
+  background: var(--bg-subtle);
+  padding: 1.25rem 0.85rem;
+  box-shadow: var(--shadow-md);
+}
+.node-battery { border-color: var(--success); }
+.node-load { border-color: #f59e0b; }
+
+.box-icon {
+  font-size: 1.75rem;
+  margin-bottom: 0.2rem;
+}
+
+.box-title {
+  font-size: 0.825rem;
+  font-weight: 800;
+  color: var(--text-main);
+  margin-bottom: 0.15rem;
+}
+
+.box-val {
+  font-size: 0.85rem;
+  font-weight: 800;
+  color: var(--primary);
+  margin-bottom: 0.15rem;
+}
+
+.node-solar .box-val { color: var(--solar); }
+.node-gen .box-val { color: var(--diesel); }
+.node-battery .box-val { color: var(--success); }
+.node-load .box-val { color: #f59e0b; }
+
+.box-sub {
+  font-size: 0.675rem;
+  color: var(--text-muted);
+  font-weight: 600;
+}
+
+.hub-badge {
+  position: absolute;
+  top: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--primary);
+  color: #0f172a;
+  font-size: 0.625rem;
+  font-weight: 800;
+  padding: 0.15rem 0.5rem;
+  border-radius: 999px;
+  letter-spacing: 0.05em;
+  white-space: nowrap;
+}
+
+.flow-arrow-h {
+  font-size: 1.2rem;
+  color: var(--text-muted);
+  font-weight: 800;
+}
+
+.flow-converge-col, .flow-diverge-col {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.converge-arrow-text, .diverge-arrow-text {
+  font-size: 0.75rem;
+  font-weight: 800;
+  color: var(--text-secondary);
+  background: var(--bg-subtle);
+  padding: 0.35rem 0.6rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  white-space: nowrap;
+}
+
+.flow-hub-col {
+  flex: 0.95;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.flow-outputs-col {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  flex: 1;
+}
+
+/* Responsive Overrides for Power Flow Diagram */
+@media (max-width: 900px) {
+  .power-flow-architecture {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 1rem;
+  }
+  .branch-nodes {
+    flex-direction: column;
+  }
+  .flow-arrow-h {
+    transform: rotate(90deg);
+  }
+  .converge-arrow-text, .diverge-arrow-text {
+    text-align: center;
+    width: 100%;
+    margin: 0.25rem 0;
+  }
+  .flow-outputs-col {
+    flex-direction: column;
+  }
+}
+
 /* Mobile Responsiveness for Component Elements */
 @media (max-width: 480px) {
   .palette-row {

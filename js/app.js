@@ -507,56 +507,46 @@ function calculateAll() {
   const paybackYears = Number((solarCapex / Math.max(1, (dieselAnnualTotal - solarOM))).toFixed(1));
 
   // 3. Update LCCA Summary Cards
-  const fmtNaira = (val) => `₦${Number(val || 0).toLocaleString('en-NG')}`;
-  const fmtNairaM = (val) => `₦${((val || 0) / 1e6).toFixed(2)} Million`;
-
-  // Solar Card
-  document.getElementById('box-solar-lcc').textContent = fmtNairaM(totalSolarLCC);
-  document.getElementById('box-solar-lcoe').textContent = `₦${solarLCOE} / kWh`;
-  document.getElementById('box-solar-capex').textContent = fmtNaira(solarCapex);
-
-  // Diesel Card
-  document.getElementById('box-diesel-lcc').textContent = fmtNairaM(totalDieselLCC);
-  document.getElementById('box-diesel-lcoe').textContent = `₦${dieselLCOE} / kWh`;
-  document.getElementById('box-diesel-capex').textContent = `₦0 (Existing 30kVA)`;
-  document.getElementById('box-diesel-fuel').textContent = `${fmtNaira(dieselAnnualFuelCost)} / yr`;
-  document.getElementById('box-diesel-25yr-fuel').textContent = `${fmtNairaM(dieselCumulativeFuel)} (7-Yr)`;
-
-  // Savings Card
-  document.getElementById('box-total-savings').textContent = fmtNairaM(netSavings);
-  document.getElementById('box-payback-time').textContent = `${paybackYears} Years`;
-  document.getElementById('box-annual-savings').textContent = `${fmtNairaM(dieselAnnualFuelCost - solarOM)} / yr`;
-  document.getElementById('box-lcoe-diff').textContent = `₦${Math.abs(Number((dieselLCOE - solarLCOE).toFixed(1)))}/kWh cheaper`;
-
-  // 4. Update Page 4 Connections Diagram & Table Elements
-  const elSolarKw = document.getElementById('conn-solar-kw');
-  const elMpptAmps = document.getElementById('conn-mppt-amps');
-  const elBattStore = document.getElementById('conn-batt-storage');
-  const elInvKva = document.getElementById('conn-inverter-kva');
-  const elGenKva = document.getElementById('conn-gen-kva');
-  if (elSolarKw) elSolarKw.textContent = `${installedKW} kWp DC`;
-  if (elMpptAmps) elMpptAmps.textContent = `${mpptAmps}A MPPT`;
-  if (elBattStore) elBattStore.textContent = `${battKWh} kWh (48V Bus)`;
-  if (elInvKva) elInvKva.textContent = `${invKW} kW Inverter`;
-  if (elGenKva) elGenKva.textContent = `${standardGenKVA} kVA Generator`;
-
-  const tblSolar = document.getElementById('table-conn-solar');
-  const tblMppt = document.getElementById('table-conn-mppt');
-  const tblBatt = document.getElementById('table-conn-batt');
-  const tblInv = document.getElementById('table-conn-inv');
-  const tblGen = document.getElementById('table-conn-gen');
-
-  if (tblSolar) tblSolar.textContent = `${installedKW} kWp (${SimulatorState.panels.length} Modules)`;
-  if (tblMppt) tblMppt.textContent = `${mpptAmps}A MPPT Controller`;
-  if (tblBatt) tblBatt.textContent = `${battKWh} kWh Bank (${battAh} Ah @ 48V DC)`;
-  if (tblInv) tblInv.textContent = `${invKW} kW Pure Sine Wave Inverter`;
-  if (tblGen) tblGen.textContent = `${standardGenKVA} kVA Generator`;
-
-  // 5. Update Report Elements (with null safety)
+  // 3. Update LCCA Summary Cards (with universal null safety)
   const setText = (id, val) => {
     const el = document.getElementById(id);
     if (el) el.textContent = val;
   };
+  const fmtNaira = (val) => `₦${Number(val || 0).toLocaleString('en-NG')}`;
+  const fmtNairaM = (val) => `₦${((val || 0) / 1e6).toFixed(2)} Million`;
+
+  // Solar Card
+  setText('box-solar-lcc', fmtNairaM(totalSolarLCC));
+  setText('box-solar-lcoe', `₦${solarLCOE} / kWh`);
+  setText('box-solar-capex', fmtNaira(solarCapex));
+
+  // Diesel Card
+  setText('box-diesel-lcc', fmtNairaM(totalDieselLCC));
+  setText('box-diesel-lcoe', `₦${dieselLCOE} / kWh`);
+  setText('box-diesel-capex', `₦0 (Existing 30kVA)`);
+  setText('box-diesel-fuel', `${fmtNaira(dieselAnnualFuelCost)} / yr`);
+  setText('box-diesel-25yr-fuel', `${fmtNairaM(dieselCumulativeFuel)} (7-Yr)`);
+
+  // Savings Card
+  setText('box-total-savings', fmtNairaM(netSavings));
+  setText('box-payback-time', `${paybackYears} Years`);
+  setText('box-annual-savings', `${fmtNairaM(dieselAnnualFuelCost - solarOM)} / yr`);
+  setText('box-lcoe-diff', `₦${Math.abs(Number((dieselLCOE - solarLCOE).toFixed(1)))}/kWh cheaper`);
+
+  // 4. Update Page 4 Connections Diagram & Table Elements
+  setText('conn-solar-kw', `${installedKW} kWp DC`);
+  setText('conn-mppt-amps', `${mpptAmps}A MPPT`);
+  setText('conn-batt-storage', `${battKWh} kWh (48V Bus)`);
+  setText('conn-inverter-kva', `${invKW} kW Inverter`);
+  setText('conn-gen-kva', `${standardGenKVA} kVA Generator`);
+
+  setText('table-conn-solar', `${installedKW} kWp (${SimulatorState.panels.length} Modules)`);
+  setText('table-conn-mppt', `${mpptAmps}A MPPT Controller`);
+  setText('table-conn-batt', `${battKWh} kWh Bank (${battAh} Ah @ 48V DC)`);
+  setText('table-conn-inv', `${invKW} kW Pure Sine Wave Inverter`);
+  setText('table-conn-gen', `${standardGenKVA} kVA Generator`);
+
+  // 5. Update Report Elements
 
   setText('rep-installed-kw', `${installedKW} kW`);
   setText('rep-expected-kw', `${expectedKW} kW`);
