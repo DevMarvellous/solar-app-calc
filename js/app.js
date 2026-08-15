@@ -341,6 +341,10 @@ function calculateAll() {
   const dailyKWh = Number((expectedKW * avgPSH).toFixed(2));
   const annualEnergyKWh = dailyKWh * 365;
 
+  // Battery Energy Storage Capacity (kWh & Ah at 48V DC bus)
+  const battKWh = Number((dailyKWh * 1.5 / 0.85).toFixed(1));
+  const battAh = Math.round((battKWh * 1000) / 48);
+
   // Matched Inverter Rating = Installed kW / 0.8
   const reqInverterKVA = Number(((installedKW / 0.8)).toFixed(1));
   const standardInverterKVA = roundToStandardInverter(reqInverterKVA);
