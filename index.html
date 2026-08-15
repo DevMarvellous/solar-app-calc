@@ -89,12 +89,8 @@
         <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1rem; margin-bottom: 1.25rem;">
           
           <div style="background: var(--bg-subtle); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 1rem;">
-            <h3 style="font-size: 0.95rem; margin-bottom: 0.75rem; color: var(--primary);">⚡ Load & Consumption Inputs</h3>
+            <h3 style="font-size: 0.95rem; margin-bottom: 0.75rem; color: var(--primary);">⚡ Load & Power Demand Inputs</h3>
             <div style="display: flex; flex-direction: column; gap: 0.75rem;">
-              <div>
-                <label style="font-size: 0.8rem; color: var(--text-secondary); display: block; margin-bottom: 0.2rem;">Daily Energy Demand (kWh/day):</label>
-                <input type="number" id="inp-daily-kwh" class="form-input-clean" value="46.94" step="0.1" />
-              </div>
               <div>
                 <label style="font-size: 0.8rem; color: var(--text-secondary); display: block; margin-bottom: 0.2rem;">Peak Load Demand (kW):</label>
                 <input type="number" id="inp-peak-kw" class="form-input-clean" value="9.60" step="0.1" />
@@ -328,17 +324,10 @@
             <span class="metric-stat-desc">Real-World Peak Power</span>
           </div>
 
-          <!-- Metric 3: Daily Generation -->
-          <div class="metric-stat-card">
-            <span class="metric-stat-title">Daily Generation</span>
-            <span class="metric-stat-number" id="metric-daily-kwh" style="color: var(--text-main);">46.94 kWh</span>
-            <span class="metric-stat-desc"><strong id="metric-psh-hours">4.89</strong> Sun Hours/day</span>
-          </div>
-
-          <!-- Metric 4: Matched Inverter & MPPT -->
+          <!-- Metric 3: Matched Pure Sine Wave Inverter -->
           <div class="metric-stat-card inverter-card">
-            <span class="metric-stat-title">Matched Inverter & MPPT</span>
-            <span class="metric-stat-number" id="metric-inverter-kva" style="font-size: 1.25rem; color: var(--primary);">15.0 kVA</span>
+            <span class="metric-stat-title">Matched Inverter</span>
+            <span class="metric-stat-number" id="metric-inverter-kva" style="font-size: 1.25rem; color: var(--primary);">12.0 kW (15.0 kVA)</span>
             <span class="metric-stat-desc">Controller: <strong id="metric-mppt-amps">250A MPPT</strong></span>
           </div>
 

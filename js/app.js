@@ -334,10 +334,12 @@ function calculateAll() {
   const standardGenKVA = roundToStandardGenerator(reqGenKVA);
 
   // Update Simulation Output Displays
+  const invKW = Number((standardInverterKVA * 0.8).toFixed(1));
   document.getElementById('metric-installed-kw').textContent = `${installedKW} kW`;
   document.getElementById('metric-expected-kw').textContent = `${expectedKW} kW`;
-  document.getElementById('metric-daily-kwh').textContent = `${dailyKWh} kWh`;
-  document.getElementById('metric-inverter-kva').textContent = `${standardInverterKVA} kVA`;
+  const elDailyKwh = document.getElementById('metric-daily-kwh');
+  if (elDailyKwh) elDailyKwh.textContent = `${dailyKWh} kWh`;
+  document.getElementById('metric-inverter-kva').textContent = `${invKW} kW (${standardInverterKVA} kVA)`;
   document.getElementById('metric-mppt-amps').textContent = `${mpptAmps}A MPPT`;
   document.getElementById('metric-gen-kva').textContent = `${standardGenKVA} kVA`;
 
@@ -435,7 +437,7 @@ function calculateAll() {
   if (elSolarKw) elSolarKw.textContent = `${installedKW} kWp DC`;
   if (elMpptAmps) elMpptAmps.textContent = `${mpptAmps}A MPPT`;
   if (elBattStore) elBattStore.textContent = `${battKWh} kWh (48V Bus)`;
-  if (elInvKva) elInvKva.textContent = `${inverterKVA} kVA Inverter`;
+  if (elInvKva) elInvKva.textContent = `${invKW} kW (${standardInverterKVA} kVA) Inverter`;
 
   const tblSolar = document.getElementById('table-conn-solar');
   const tblMppt = document.getElementById('table-conn-mppt');
@@ -446,7 +448,7 @@ function calculateAll() {
   if (tblSolar) tblSolar.textContent = `${installedKW} kWp (${SimulatorState.panels.length} Modules)`;
   if (tblMppt) tblMppt.textContent = `${mpptAmps}A MPPT Controller`;
   if (tblBatt) tblBatt.textContent = `${battKWh} kWh Bank (${battAh} Ah @ 48V DC)`;
-  if (tblInv) tblInv.textContent = `${inverterKVA} kVA Pure Sine Wave Inverter`;
+  if (tblInv) tblInv.textContent = `${invKW} kW (${standardInverterKVA} kVA) Pure Sine Wave Inverter`;
   if (tblGen) tblGen.textContent = `${genKVA} kVA Generator`;
 
   // 5. Update Report Elements
