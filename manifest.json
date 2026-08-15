@@ -1,0 +1,19 @@
+{
+  "name": "SolarCalc Pro - Solar PV & Diesel LCCA",
+  "short_name": "SolarCalc Pro",
+  "description": "Life Cycle Cost Analysis and Sizing Software for Solar Photovoltaic & Diesel Generator Systems in Nigeria",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#0b0f19",
+  "theme_color": "#0284c7",
+  "orientation": "any",
+  "icons": [
+    {
+      "src": "favicon.svg",
+      "sizes": "192x192 512x512",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["education", "engineering", "productivity", "utilities"]
+}

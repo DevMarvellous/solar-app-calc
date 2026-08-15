@@ -1,0 +1,59 @@
+/* A4 Print Stylesheet for Project Defense Report */
+@media print {
+  body {
+    background: #ffffff !important;
+    color: #000000 !important;
+    font-size: 11pt;
+    line-height: 1.4;
+  }
+
+  .no-print, header button, .preset-site-select {
+    display: none !important;
+  }
+
+  .container {
+    max-width: 100% !important;
+    padding: 0 !important;
+  }
+
+  .app-header {
+    border-bottom: 2px solid #000000 !important;
+    padding-bottom: 8px !important;
+    margin-bottom: 15px !important;
+  }
+
+  .lcca-workspace {
+    display: block !important;
+  }
+
+  .panel {
+    border: 1px solid #cccccc !important;
+    box-shadow: none !important;
+    page-break-inside: avoid;
+    margin-bottom: 15px !important;
+  }
+
+  .input-section-box {
+    border: 1px solid #e2e8f0 !important;
+    background: #ffffff !important;
+  }
+
+  .results-banner {
+    background: #f0fdf4 !important;
+    border: 1px solid #16a34a !important;
+  }
+
+  .lcca-table {
+    border: 1px solid #000000 !important;
+  }
+
+  .lcca-table th, .lcca-table td {
+    border: 1px solid #cccccc !important;
+  }
+
+  .app-footer {
+    border-top: 1px solid #000000 !important;
+    margin-top: 20px !important;
+    padding-top: 10px !important;
+  }
+}

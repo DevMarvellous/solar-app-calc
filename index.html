@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Solar & Diesel Generator Life Cycle Cost Analyzer (Nigeria)</title>
+  <meta name="description" content="Professional Sizing and Life Cycle Cost Analysis (LCCA) Software for Solar Photovoltaic and Diesel Generator Systems in Nigeria." />
+  
+  <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
+  <link rel="manifest" href="./manifest.json" />
+  
+  <!-- Clean Modern Stylesheets -->
+  <link rel="stylesheet" href="./css/main.css" />
+  <link rel="stylesheet" href="./css/components.css" />
+  <link rel="stylesheet" href="./css/print.css" />
+</head>
+<body>
+
+  <!-- Top Header -->
+  <header class="app-header">
+    <div class="container header-inner">
+      <div class="header-brand">
+        <h1>
+          <span>⚡</span>
+          <span>Solar & Diesel Life Cycle Cost Analyzer</span>
+        </h1>
+        <p>Professional Sizing & Techno-Economic Evaluation Software (Nigeria)</p>
+      </div>
+
+      <div class="header-actions">
+        <button class="btn btn-primary no-print" onclick="window.print()">
+          🖨️ Print / Save PDF Report
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Container -->
+  <main class="container">
+
+    <!-- Top View Navigation Switcher -->
+    <nav class="view-nav no-print">
+      <button class="view-btn active" data-view="view-simulator" onclick="switchView('view-simulator')">
+        🔬 1. Solar Array Simulator & Cost Analysis
+      </button>
+      <button class="view-btn" data-view="view-report" onclick="switchView('view-report')">
+        📄 2. System Sizing & Financial Report
+      </button>
+    </nav>
+
+    <!-- VIEW 1: SOLAR PANEL ARRAY SIMULATOR & LCCA WORKSPACE -->
+    <div id="view-simulator" class="view-content active">
+      
+      <!-- Top Simulation Control & Drag-and-Drop Dock -->
+      <div class="main-card">
+        
+        <div class="card-title-group">
+          <div>
+            <h2 class="card-heading">
+              <span>☀️</span>
+              <span>Interactive Solar Panel Array Mounting Simulator</span>
+            </h2>
+            <p class="card-subheading">
+              Drag solar modules onto the rack or use quick buttons. As you arrange panels, the capacity, expected power ($0.8\times\text{Installed}$), inverter, and generator calculate live!
+            </p>
+          </div>
+
+          <div style="display: flex; gap: 0.5rem; align-items: center;">
+            <button class="btn btn-secondary btn-sm" onclick="switchView('view-report')">
+              📄 View Full Financial Report →
+            </button>
+          </div>
+        </div>
+
+        <!-- 1. DRAGGABLE PALETTE (DIRECTLY ATTACHED TO MOUNTING RACK) -->
+        <div class="simulator-controls-bar">
+          
+          <!-- Palette Chips Row -->
+          <div class="palette-row">
+            <div class="palette-label">
+              <strong>🖱️ Drag & Drop:</strong>
+            </div>
+
+            <div class="draggable-modules-list">
+              <div class="drag-item" draggable="true" ondragstart="handlePaletteDragStart(event, 450)">
+                450W
+              </div>
+              <div class="drag-item" draggable="true" ondragstart="handlePaletteDragStart(event, 600)">
+                600W
+              </div>
+              <div class="drag-item" draggable="true" ondragstart="handlePaletteDragStart(event, 700)">
+                700W
+              </div>
+              <div class="drag-item" draggable="true" ondragstart="handlePaletteDragStart(event, 1000)">
+                1000W
+              </div>
+              <div class="drag-item" draggable="true" ondragstart="handlePaletteDragStart(event, 2000)">
+                2000W
+              </div>
+            </div>
+
+            <!-- Quick Add & Remove Buttons -->
+            <div style="display: flex; gap: 0.35rem; align-items: center;">
+              <button class="btn btn-primary btn-sm" onclick="addSinglePanel()">
+                + Add 1 Panel
+              </button>
+              <button class="btn btn-danger btn-sm" onclick="removeLastPanel()" title="Remove the last panel in the rack">
+                - Remove 1
+              </button>
+            </div>
+          </div>
+
+          <!-- Secondary Sub-Row: Presets & Ratings -->
+          <div class="controls-sub-row">
+            <!-- Quick Presets -->
+            <div class="control-pill-group">
+              <span class="control-pill-label">Presets:</span>
+              <button class="pill-btn" onclick="setQuickPanelCount(4)">4 Panels</button>
+              <button class="pill-btn" onclick="setQuickPanelCount(10)">10 Panels</button>
+              <button class="pill-btn active" id="pill-count-20" onclick="setQuickPanelCount(20)">20 Panels</button>
+              <button class="pill-btn" onclick="setQuickPanelCount(30)">30 Panels</button>
+              <button class="pill-btn" onclick="setQuickPanelCount(40)">40 Panels</button>
+            </div>
+
+            <!-- Global Rating Switcher -->
+            <div class="control-pill-group">
+              <span class="control-pill-label">Rating:</span>
+              <button class="pill-btn" onclick="setGlobalPanelWattage(450)">450W</button>
+              <button class="pill-btn" onclick="setGlobalPanelWattage(550)">550W</button>
+              <button class="pill-btn active" id="pill-watt-600" onclick="setGlobalPanelWattage(600)">600W</button>
+              <button class="pill-btn" onclick="setGlobalPanelWattage(700)">700W</button>
+              <button class="pill-btn" onclick="setGlobalPanelWattage(1000)">1000W</button>
+              <button class="pill-btn" onclick="setGlobalPanelWattage(2000)">2000W</button>
+            </div>
+
+            <div style="display: flex; gap: 0.35rem;">
+              <button class="btn btn-secondary btn-sm" onclick="setQuickPanelCount(20)" title="Reset to standard 20 modules">
+                ↺ Reset (20)
+              </button>
+              <button class="btn btn-danger btn-sm" onclick="clearAllPanels()">
+                🗑️ Clear All
+              </button>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- 2. SOLAR MOUNTING RACK (DIRECTLY UNDERNEATH PALETTE - ZERO GAP) -->
+        <div class="rack-status-bar">
+          <div>
+            <strong style="font-size: 0.85rem; color: var(--text-main);">
+              🏗️ Solar Array Mounting Rack (Drop Modules Here)
+            </strong>
+          </div>
+          <span style="font-size: 0.8rem; color: var(--text-secondary);">
+            Active Modules: <strong id="metric-active-badge" style="color: var(--primary);">20 Modules</strong>
+          </span>
+        </div>
+
+        <div class="solar-mounting-rack" id="solar-mounting-rack-board" ondragover="handleRackDragOver(event)" ondragleave="handleRackDragLeave(event)" ondrop="handleRackDrop(event)">
+          <!-- Real Photorealistic Modules will render here dynamically -->
+        </div>
+
+        <!-- 3. LIVE ELECTRICAL CAPACITY METRICS ROW (PLACED UNDERNEATH RACK) -->
+        <div class="metrics-summary-row">
+          
+          <!-- Metric 1: Installed Capacity -->
+          <div class="metric-stat-card installed-card">
+            <span class="metric-stat-title">Total Installed Solar</span>
+            <span class="metric-stat-number" id="metric-installed-kw" style="color: var(--solar);">12.00 kW</span>
+            <span class="metric-stat-desc"><span id="metric-panel-count">20 Panels</span> in Array</span>
+          </div>
+
+          <!-- Metric 2: Expected Power Output (x 0.8) -->
+          <div class="metric-stat-card expected-card">
+            <span class="metric-stat-title">Expected Output</span>
+            <span class="metric-stat-number" id="metric-expected-kw" style="color: var(--success);">9.60 kW</span>
+            <span class="metric-stat-desc">Installed kW × <strong>0.80</strong> (Losses)</span>
+          </div>
+
+          <!-- Metric 3: Daily Generation -->
+          <div class="metric-stat-card">
+            <span class="metric-stat-title">Daily Generation</span>
+            <span class="metric-stat-number" id="metric-daily-kwh" style="color: var(--text-main);">46.94 kWh</span>
+            <span class="metric-stat-desc"><strong id="metric-psh-hours">4.89</strong> Sun Hours/day</span>
+          </div>
+
+          <!-- Metric 4: Matched Inverter & MPPT -->
+          <div class="metric-stat-card inverter-card">
+            <span class="metric-stat-title">Matched Inverter & MPPT</span>
+            <span class="metric-stat-number" id="metric-inverter-kva" style="font-size: 1.25rem; color: var(--primary);">15.0 kVA</span>
+            <span class="metric-stat-desc">Controller: <strong id="metric-mppt-amps">250A MPPT</strong></span>
+          </div>
+
+          <!-- Metric 5: Backup Diesel Generator -->
+          <div class="metric-stat-card gen-card">
+            <span class="metric-stat-title">Backup Generator</span>
+            <span class="metric-stat-number" id="metric-gen-kva" style="font-size: 1.25rem; color: var(--diesel);">18.75 kVA</span>
+            <span class="metric-stat-desc">Full backup capacity</span>
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- 3-Card Clean Life Cycle Cost (LCCA) Summary -->
+      <div class="main-card">
+        <div class="card-title-group">
+          <div>
+            <h3 class="card-heading">
+              <span>💰</span>
+              <span>7-Year Life Cycle Cost Analysis (LCCA) Summary</span>
+            </h3>
+            <p class="card-subheading">Economic comparison of generating power via Solar PV vs running a Diesel Generator in Nigeria (Megaloite Case Study).</p>
+          </div>
+        </div>
+
+        <div class="lcca-three-card-grid">
+          
+          <!-- 1. SOLAR PV -->
+          <div class="lcca-summary-box solar-box">
+            <div class="lcca-box-header">
+              <span class="lcca-box-title" style="color: var(--solar);">☀️ Option 1: Standalone Solar PV</span>
+            </div>
+            <div>
+              <span style="font-size: 0.725rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase;">7-Year Life Cycle Cost (LCC)</span>
+              <div class="lcca-box-price" id="box-solar-lcc" style="color: var(--solar);">₦12.50 Million</div>
+              <span style="font-size: 0.775rem; color: var(--text-secondary);">Levelized Cost: <strong id="box-solar-lcoe">₦104.2 / kWh</strong></span>
+            </div>
+            <div class="lcca-stat-list">
+              <div class="lcca-stat-row"><span>Initial Solar Turnkey Cost:</span><strong id="box-solar-capex">₦9,850,000</strong></div>
+              <div class="lcca-stat-row"><span>Annual Fuel Expense:</span><strong style="color: var(--success);">₦0 / Year (Zero Fuel)</strong></div>
+              <div class="lcca-stat-row"><span>Harmattan Cleaning & Inspect:</span><strong>₦180,000 / year</strong></div>
+              <div class="lcca-stat-row"><span>Evaluation Horizon:</span><strong>7 Years (10% Discount)</strong></div>
+            </div>
+          </div>
+
+          <!-- 2. DIESEL GENERATOR -->
+          <div class="lcca-summary-box diesel-box">
+            <div class="lcca-box-header">
+              <span class="lcca-box-title" style="color: var(--diesel);">⛽ Option 2: Diesel Generator</span>
+            </div>
+            <div>
+              <span style="font-size: 0.725rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase;">7-Year Life Cycle Cost (LCC)</span>
+              <div class="lcca-box-price" id="box-diesel-lcc" style="color: var(--diesel);">₦123.60 Million</div>
+              <span style="font-size: 0.775rem; color: var(--text-secondary);">Levelized Cost: <strong id="box-diesel-lcoe">₦1,030.0 / kWh</strong></span>
+            </div>
+            <div class="lcca-stat-list">
+              <div class="lcca-stat-row"><span>Initial Gen Purchase:</span><strong id="box-diesel-capex">₦0 (Existing 30kVA)</strong></div>
+              <div class="lcca-stat-row"><span>Annual Diesel Fuel (1000L/m):</span><strong id="box-diesel-fuel" style="color: var(--diesel);">₦25,200,000 / yr</strong></div>
+              <div class="lcca-stat-row"><span>7-Year Cumulative Fuel:</span><strong id="box-diesel-25yr-fuel" style="color: var(--diesel);">₦176.4 Million</strong></div>
+              <div class="lcca-stat-row"><span>Diesel Pump Price:</span><strong>₦2,100 / Liter</strong></div>
+            </div>
+          </div>
+
+          <!-- 3. MONEY SAVED & VERDICT -->
+          <div class="lcca-summary-box savings-box">
+            <div class="lcca-box-header">
+              <span class="lcca-box-title" style="color: var(--success);">🌿 Cumulative Money Saved</span>
+            </div>
+            <div>
+              <span style="font-size: 0.725rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase;">7-Year Net Fuel Savings</span>
+              <div class="lcca-box-price" id="box-total-savings" style="color: var(--success);">₦111.10 Million</div>
+              <span style="font-size: 0.775rem; color: var(--text-secondary);">Payback Period: <strong id="box-payback-time" style="color: var(--primary);">0.4 Years (< 5 Months)</strong></span>
+            </div>
+            <div class="lcca-stat-list">
+              <div class="lcca-stat-row"><span>Annual Running Savings:</span><strong id="box-annual-savings" style="color: var(--success);">₦25.02 Million / yr</strong></div>
+              <div class="lcca-stat-row"><span>Payback vs Generator:</span><strong id="box-payback-sub">Fuel pays off solar rapidly</strong></div>
+              <div class="lcca-stat-row"><span>Energy Cost Advantage:</span><strong id="box-lcoe-diff" style="color: var(--success);">₦925.8/kWh cheaper</strong></div>
+              <div class="lcca-stat-row"><span>Analysis Horizon:</span><strong>7 Years (10% Discount)</strong></div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- 12-Month Solar Radiation Inputs -->
+        <div style="background: var(--bg-subtle); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 0.85rem; margin-top: 1rem;">
+          <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 0.5rem;">
+            <div>
+              <strong style="font-size: 0.825rem; color: var(--text-main);">☀️ Meteorological Solar Radiation (Wh/m²/day)</strong>
+              <p style="font-size: 0.725rem; color: var(--text-muted); margin: 0;">12 monthly insolation values (Mushin, Lagos / Case Study Table 3.3).</p>
+            </div>
+            <div style="display: flex; align-items: center; gap: 0.35rem;">
+              <span style="font-size: 0.75rem; color: var(--text-secondary); font-weight: 700;">Preset:</span>
+              <select id="preset-site-select" class="form-input-clean" style="width: auto; padding: 0.2rem 0.45rem; font-size: 0.75rem;">
+                <option value="site-study" selected>Mushin Axis, Lagos (MG0001 Table 3.3)</option>
+                <option value="lagos">Lagos Coastal (4.42 kWh/m²)</option>
+                <option value="abuja">Abuja (FCT)</option>
+                <option value="kano">Kano (North - 6.08 kWh/m²)</option>
+                <option value="port-harcourt">Port Harcourt (South)</option>
+                <option value="enugu">Enugu (East)</option>
+                <option value="sokoto">Sokoto (North-West)</option>
+                <option value="jos">Jos (Plateau)</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="month-grid">
+            <div class="month-cell"><span>Jan</span><input type="number" id="m-0" value="5976" /></div>
+            <div class="month-cell"><span>Feb</span><input type="number" id="m-1" value="5380" /></div>
+            <div class="month-cell"><span>Mar</span><input type="number" id="m-2" value="5631" /></div>
+            <div class="month-cell"><span>Apr</span><input type="number" id="m-3" value="5256" /></div>
+            <div class="month-cell"><span>May</span><input type="number" id="m-4" value="4740" /></div>
+            <div class="month-cell"><span>Jun</span><input type="number" id="m-5" value="3746" /></div>
+            <div class="month-cell"><span>Jul</span><input type="number" id="m-6" value="3891" /></div>
+            <div class="month-cell"><span>Aug</span><input type="number" id="m-7" value="4329" /></div>
+            <div class="month-cell"><span>Sep</span><input type="number" id="m-8" value="4188" /></div>
+            <div class="month-cell"><span>Oct</span><input type="number" id="m-9" value="4772" /></div>
+            <div class="month-cell"><span>Nov</span><input type="number" id="m-10" value="5048" /></div>
+            <div class="month-cell"><span>Dec</span><input type="number" id="m-11" value="5694" /></div>
+          </div>
+
+          <div style="margin-top: 0.4rem; font-size: 0.75rem; color: var(--text-secondary); display: flex; justify-content: space-between;">
+            <span>Annual Sun Hours: <strong id="calculated-avg-psh" style="color: var(--solar);">4.89 hrs/day</strong></span>
+            <span style="color: var(--text-muted);">(Annual PV Yield: 58,651 kWh)</span>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- VIEW 2: FULL TECHNICAL & FINANCIAL REPORT (PRINT / PDF) -->
+    <div id="view-report" class="view-content">
+      
+      <div class="report-paper">
+        
+        <!-- Document Top Action Bar -->
+        <div class="no-print" style="display: flex; justify-content: space-between; align-items: center; background: var(--bg-subtle); border: 1px solid var(--border-subtle); padding: 0.65rem 0.85rem; border-radius: var(--radius-md); margin-bottom: 1.25rem;">
+          <div>
+            <strong style="font-size: 0.9rem;">System Sizing & Life Cycle Cost Report</strong>
+            <p style="font-size: 0.75rem; color: var(--text-muted); margin: 0;">Comprehensive techno-economic evaluation for solar and diesel installations.</p>
+          </div>
+
+          <div style="display: flex; gap: 0.4rem;">
+            <button class="btn btn-secondary btn-sm" onclick="switchView('view-simulator')">
+              ← Back to Simulator
+            </button>
+            <button class="btn btn-primary btn-sm" onclick="window.print()">
+              🖨️ Print / Save PDF
+            </button>
+            <button class="btn btn-secondary btn-sm" onclick="exportCSV()">
+              📥 Download CSV
+            </button>
+          </div>
+        </div>
+
+        <!-- Report Header -->
+        <div class="report-header">
+          <span style="font-size: 0.7rem; font-weight: 800; letter-spacing: 0.08em; color: var(--primary); text-transform: uppercase;">
+            TECHNICAL & FINANCIAL EVALUATION REPORT
+          </span>
+          <h2>Life Cycle Cost Analysis: Solar Photovoltaic vs Diesel Generator System</h2>
+          <p>Techno-Economic Sizing and 7-Year Feasibility Assessment (Nigeria)</p>
+        </div>
+
+        <!-- Project Metadata Grid -->
+        <div class="report-meta-grid">
+          <div><span style="color: var(--text-muted);">Evaluation Scope:</span><br><strong>Solar PV vs Diesel Generator</strong></div>
+          <div><span style="color: var(--text-muted);">Installed Capacity:</span><br><strong style="color: var(--primary);" id="rep-installed-meta">12.0 kW Array</strong></div>
+          <div><span style="color: var(--text-muted);">Fuel Benchmark:</span><br><strong>₦2,100 / Liter Diesel</strong></div>
+          <div><span style="color: var(--text-muted);">Economic Horizon:</span><br><strong>7 Years (10% Discount Rate)</strong></div>
+        </div>
+
+        <!-- Section 1.0: Executive Summary -->
+        <div class="report-section">
+          <h3 class="report-section-title">1.0 Executive Summary & Life Cycle Cost Analysis Findings</h3>
+          <p style="font-size: 0.85rem; color: var(--text-secondary); line-height: 1.6;">
+            A comprehensive 7-Year Life Cycle Cost Analysis (LCCA) was conducted for the simulated power generation system. 
+            The system installed capacity is <strong id="rep-installed-kw">12.0 kW</strong> with expected generation of <strong id="rep-expected-kw">9.6 kW</strong>. 
+            Under Nigerian economic conditions (Diesel pump price: ₦2,100/Liter, 10% discount rate), Solar PV completely eliminates fuel expenditures and saves over ₦111 Million across the 7-year study period.
+          </p>
+
+          <div style="margin-top: 0.85rem;" class="table-wrap">
+            <table class="lcca-table">
+              <thead>
+                <tr>
+                  <th>System Configuration</th>
+                  <th>Initial Capital (₦)</th>
+                  <th>Annual Fuel (₦/yr)</th>
+                  <th>7-Year LCC (₦)</th>
+                  <th>Cost / kWh (LCOE)</th>
+                  <th>Payback vs Diesel</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Option 1: Standalone Solar PV</strong></td>
+                  <td id="rep-solar-capex">₦9,850,000</td>
+                  <td style="color: var(--success); font-weight: 700;">₦0</td>
+                  <td id="rep-solar-lcc" style="font-weight: 800; color: var(--solar);">₦12.50 M</td>
+                  <td id="rep-solar-lcoe">₦104.2 / kWh</td>
+                  <td id="rep-solar-payback" style="font-weight: 700; color: var(--primary);">0.4 Years</td>
+                </tr>
+                <tr>
+                  <td><strong>Option 2: Standalone Diesel Generator</strong></td>
+                  <td id="rep-diesel-capex">₦0 (Sunk)</td>
+                  <td id="rep-diesel-fuel" style="color: var(--diesel); font-weight: 700;">₦25.20M / yr</td>
+                  <td id="rep-diesel-lcc" style="font-weight: 800; color: var(--diesel);">₦123.60 M</td>
+                  <td id="rep-diesel-lcoe">₦1,030.0 / kWh</td>
+                  <td>Baseline</td>
+                </tr>
+                <tr>
+                  <td><strong>Option 3: Hybrid Solar-Diesel System</strong></td>
+                  <td id="rep-hybrid-capex">₦9,850,000</td>
+                  <td id="rep-hybrid-fuel" style="color: var(--hybrid); font-weight: 700;">₦6.30M / yr</td>
+                  <td id="rep-hybrid-lcc" style="font-weight: 800; color: var(--hybrid);">₦41.52 M</td>
+                  <td id="rep-hybrid-lcoe">₦346.0 / kWh</td>
+                  <td id="rep-hybrid-payback" style="font-weight: 700; color: var(--hybrid);">0.5 Years</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Section 2.0: Solar Radiation Profile -->
+        <div class="report-section">
+          <h3 class="report-section-title">2.0 Monthly Solar Radiation Profile (Wh/m²/day)</h3>
+          <div class="table-wrap">
+            <table class="lcca-table" style="text-align: center;">
+              <thead>
+                <tr>
+                  <th>Jan</th><th>Feb</th><th>Mar</th><th>Apr</th><th>May</th><th>Jun</th>
+                  <th>Jul</th><th>Aug</th><th>Sep</th><th>Oct</th><th>Nov</th><th>Dec</th>
+                  <th>Annual Avg</th>
+                </tr>
+              </thead>
+              <tbody id="rep-monthly-tbody"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Section 3.0: 7-Year Cash Flow Breakdown -->
+        <div class="report-section">
+          <h3 class="report-section-title">3.0 7-Year Discounted Life Cycle Cash Flow Schedule</h3>
+          <div class="table-wrap">
+            <table class="lcca-table">
+              <thead>
+                <tr>
+                  <th>Period</th>
+                  <th>Solar Annual Cost (₦)</th>
+                  <th>Solar Cum. LCC (₦)</th>
+                  <th>Diesel Annual Fuel (₦)</th>
+                  <th>Diesel Cum. LCC (₦)</th>
+                  <th>Hybrid Cum. LCC (₦)</th>
+                </tr>
+              </thead>
+              <tbody id="rep-cashflow-tbody"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Section 4.0: Technical Approval Block -->
+        <div class="sign-off-block">
+          <div style="text-align: center;">
+            <div class="sign-line"></div>
+            <strong>Lead Solar System Engineer</strong>
+            <div style="font-size: 0.75rem; color: var(--text-muted);">Technical Sizing & Simulation Certification</div>
+          </div>
+          <div style="text-align: center;">
+            <div class="sign-line"></div>
+            <strong>Project Director / Financial Analyst</strong>
+            <div style="font-size: 0.75rem; color: var(--text-muted);">Life Cycle Cost Approval</div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="app-footer">
+    <div class="container">
+      <p><strong>Solar & Diesel Generator Life Cycle Cost Analyzer</strong> • Professional Renewable Energy Engineering Tool</p>
+      <p style="margin-top: 0.2rem; font-size: 0.75rem; color: var(--text-muted);">Zero-dependency web application & Progressive Web App (PWA)</p>
+    </div>
+  </footer>
+
+  <script src="./js/app.js?v=8.0.0"></script>
+</body>
+</html>

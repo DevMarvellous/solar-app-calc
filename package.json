@@ -1,0 +1,13 @@
+{
+  "name": "solar-diesel-lcca",
+  "version": "1.0.0",
+  "description": "Life Cycle Cost Analysis and Sizing Software for Solar Photovoltaic and Diesel Generator Systems in Nigeria",
+  "main": "index.html",
+  "scripts": {
+    "dev": "npx -y serve . -p 3000",
+    "start": "npx -y serve . -p 3000"
+  },
+  "keywords": ["solar", "photovoltaic", "diesel", "generator", "lcca", "nigeria"],
+  "author": "",
+  "license": "MIT"
+}
