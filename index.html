@@ -28,13 +28,33 @@
       </div>
 
       <div class="header-actions">
+        <!-- Mobile Hamburger Toggle Button -->
+        <button id="btn-hamburger" class="btn btn-secondary mobile-only-inline no-print" onclick="toggleMobileNav()" title="Toggle Navigation Menu">
+          ☰ Navigation
+        </button>
         <button id="btn-install-pwa" class="btn btn-secondary no-print" onclick="installPWA()" style="display: none; background: #0284c7; color: white;">
           📲 Install App
         </button>
         <button class="btn btn-primary no-print" onclick="window.print()">
-          🖨️ Print / Save PDF Report
+          🖨️ Print PDF
         </button>
       </div>
+    </div>
+
+    <!-- Mobile Dropdown Navigation Menu -->
+    <div id="mobile-nav-dropdown" class="mobile-nav-menu no-print">
+      <button class="mobile-nav-item active" data-view="view-calculation" onclick="switchViewMobile('view-calculation')">
+        🧮 1. System Calculations
+      </button>
+      <button class="mobile-nav-item" data-view="view-simulator" onclick="switchViewMobile('view-simulator')">
+        🔬 2. Solar Panel Array Simulator
+      </button>
+      <button class="mobile-nav-item" data-view="view-cost-savings" onclick="switchViewMobile('view-cost-savings')">
+        💰 3. Client Cost Savings (LCCA)
+      </button>
+      <button class="mobile-nav-item" data-view="view-connections" onclick="switchViewMobile('view-connections')">
+        🔌 4. System Connections & Wiring
+      </button>
     </div>
   </header>
 
@@ -52,7 +72,7 @@
   <!-- Main Container -->
   <main class="container">
 
-    <!-- Top View Navigation Switcher (4 Pages) -->
+    <!-- Desktop & Tablet View Navigation Switcher (4 Pages) -->
     <nav class="view-nav no-print">
       <button class="view-btn active" data-view="view-calculation" onclick="switchView('view-calculation')">
         🧮 1. System Calculations
@@ -381,7 +401,7 @@
             <div class="lcca-stat-list">
               <div class="lcca-stat-row"><span>Initial Solar Turnkey Cost:</span><strong id="box-solar-capex">₦9,850,000</strong></div>
               <div class="lcca-stat-row"><span>Annual Fuel Expense:</span><strong style="color: var(--success);">₦0 / Year (Zero Fuel)</strong></div>
-              <div class="lcca-stat-row"><span>Harmattan Cleaning & Inspect:</span><strong>₦180,000 / year</strong></div>
+              <div class="lcca-stat-row"><span>Harmattan Cleaning & Inspect:</span><strong>₦90,000 / year</strong></div>
               <div class="lcca-stat-row"><span>Evaluation Horizon:</span><strong>7 Years (10% Discount)</strong></div>
             </div>
           </div>

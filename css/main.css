@@ -187,8 +187,57 @@ body {
   display: block;
 }
 
+.mobile-only-inline {
+  display: none;
+}
+
+/* Mobile Dropdown Menu Drawer */
+.mobile-nav-menu {
+  display: none;
+  flex-direction: column;
+  gap: 0.35rem;
+  background: var(--bg-card);
+  border: 2px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 0.5rem;
+  margin-top: 0.75rem;
+  box-shadow: var(--shadow-lg);
+  animation: slideDownMenu 200ms ease;
+}
+
+.mobile-nav-menu.show {
+  display: flex;
+}
+
+.mobile-nav-item {
+  padding: 0.75rem 1rem;
+  border: 2px solid transparent;
+  background: var(--bg-subtle);
+  color: var(--text-main);
+  font-size: 0.95rem;
+  font-weight: 800;
+  border-radius: var(--radius-sm);
+  text-align: left;
+  cursor: pointer;
+  transition: all 120ms ease;
+}
+
+.mobile-nav-item.active {
+  background: var(--primary-bg);
+  color: var(--primary);
+  border-color: var(--primary);
+}
+
+@keyframes slideDownMenu {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
 /* Mobile Responsiveness Improvements */
 @media (max-width: 640px) {
+  .mobile-only-inline {
+    display: inline-flex;
+  }
   .app-header {
     padding: 0.75rem 0;
   }

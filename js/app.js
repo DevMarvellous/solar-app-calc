@@ -40,14 +40,33 @@ document.addEventListener('DOMContentLoaded', () => {
   calculateAll();
 });
 
-/* View Navigation */
+/* View Navigation & Mobile Hamburger Controls */
 window.switchView = function(viewId) {
   document.querySelectorAll('.view-btn').forEach(btn => {
+    btn.classList.toggle('active', btn.getAttribute('data-view') === viewId);
+  });
+  document.querySelectorAll('.mobile-nav-item').forEach(btn => {
     btn.classList.toggle('active', btn.getAttribute('data-view') === viewId);
   });
   document.querySelectorAll('.view-content').forEach(view => {
     view.classList.toggle('active', view.id === viewId);
   });
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+};
+
+window.toggleMobileNav = function() {
+  const menu = document.getElementById('mobile-nav-dropdown');
+  if (menu) {
+    menu.classList.toggle('show');
+  }
+};
+
+window.switchViewMobile = function(viewId) {
+  switchView(viewId);
+  const menu = document.getElementById('mobile-nav-dropdown');
+  if (menu) {
+    menu.classList.remove('show');
+  }
 };
 
 function initPresetDropdown() {
@@ -351,7 +370,7 @@ function calculateAll() {
   // Capital Costs:
   // For 10-12kW array, turnkey PV subsystem = ₦9,850,000 (scaled by capacity)
   const solarCapex = Math.round((installedKW / 12.0) * 9850000);
-  const solarOM = Math.round(180000); // dry season cleaning + quarterly inspections
+  const solarOM = Math.round(90000); // dry season cleaning + quarterly inspections
   const batteryRepCost = Math.round(solarCapex * 0.35);
 
   // Diesel-Only Scenario (30 kVA Genset, 1,000 L/month baseline)
