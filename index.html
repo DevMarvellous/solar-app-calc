@@ -572,9 +572,11 @@
                   <!-- Node 1: Panels -->
                   <div class="flow-box node-solar">
                     <div class="box-icon">☀️</div>
-                    <div class="box-title">1. Solar PV Array</div>
-                    <div class="box-val" id="conn-solar-kw">12.0 kWp DC</div>
-                    <div class="box-sub">String DC Cabling</div>
+                    <div class="flow-box-content">
+                      <div class="box-title">1. Solar PV Array</div>
+                      <div class="box-val" id="conn-solar-kw">12.0 kWp DC</div>
+                      <div class="box-sub">String DC Cabling</div>
+                    </div>
                   </div>
                   
                   <div class="flow-arrow-h">➔</div>
@@ -582,9 +584,11 @@
                   <!-- Node 2: Inverter -->
                   <div class="flow-box node-inverter">
                     <div class="box-icon">⚡</div>
-                    <div class="box-title">2. Pure Sine Inverter</div>
-                    <div class="box-val" id="conn-inverter-kva">12.0 kW Inverter</div>
-                    <div class="box-sub">DC/AC Power Stage</div>
+                    <div class="flow-box-content">
+                      <div class="box-title">2. Pure Sine Inverter</div>
+                      <div class="box-val" id="conn-inverter-kva">12.0 kW Inverter</div>
+                      <div class="box-sub">DC/AC Power Stage</div>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -595,9 +599,11 @@
                 <div class="branch-nodes">
                   <div class="flow-box node-gen">
                     <div class="box-icon">⛽</div>
-                    <div class="box-title">Backup Generator</div>
-                    <div class="box-val" id="conn-gen-kva">18.75 kVA Generator</div>
-                    <div class="box-sub">Automatic Transfer Switch</div>
+                    <div class="flow-box-content">
+                      <div class="box-title">Backup Generator</div>
+                      <div class="box-val" id="conn-gen-kva">18.75 kVA Generator</div>
+                      <div class="box-sub">Automatic Transfer Switch</div>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -613,9 +619,11 @@
               <div class="flow-box node-hub">
                 <span class="hub-badge">CENTRAL REGULATOR</span>
                 <div class="box-icon">🎛️</div>
-                <div class="box-title">3. Charge Controller (MPPT)</div>
-                <div class="box-val" id="conn-mppt-amps">250A MPPT</div>
-                <div class="box-sub">Central Charge & Power Hub</div>
+                <div class="flow-box-content">
+                  <div class="box-title">3. Charge Controller (MPPT)</div>
+                  <div class="box-val" id="conn-mppt-amps">250A MPPT</div>
+                  <div class="box-sub">Central Charge & Power Hub</div>
+                </div>
               </div>
             </div>
 
@@ -629,17 +637,21 @@
               <!-- Output A: Battery Bank -->
               <div class="flow-box node-battery">
                 <div class="box-icon">🔋</div>
-                <div class="box-title">4A. Battery Storage</div>
-                <div class="box-val" id="conn-batt-storage">82.8 kWh (48V)</div>
-                <div class="box-sub" id="conn-batt-packs">Lithium LiFePO4 Bank</div>
+                <div class="flow-box-content">
+                  <div class="box-title">4A. Battery Storage</div>
+                  <div class="box-val" id="conn-batt-storage">82.8 kWh (48V)</div>
+                  <div class="box-sub" id="conn-batt-packs">Lithium LiFePO4 Bank</div>
+                </div>
               </div>
 
               <!-- Output B: Building Load -->
               <div class="flow-box node-load">
                 <div class="box-icon">💡</div>
-                <div class="box-title">4B. Building AC Loads</div>
-                <div class="box-val">230V / 400V AC</div>
-                <div class="box-sub">Lighting, Power & Equipment</div>
+                <div class="flow-box-content">
+                  <div class="box-title">4B. Building AC Loads</div>
+                  <div class="box-val">230V / 400V AC</div>
+                  <div class="box-sub">Lighting, Power & Equipment</div>
+                </div>
               </div>
             </div>
           </div>
