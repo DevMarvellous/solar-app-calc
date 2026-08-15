@@ -3,6 +3,31 @@
  * Professional Sizing & Techno-Economic Evaluation Engine (Nigeria)
  */
 
+/* View Navigation Controls - Top Level Binding */
+window.switchView = function(viewId) {
+  document.querySelectorAll('.view-btn').forEach(btn => {
+    btn.classList.toggle('active', btn.getAttribute('data-view') === viewId);
+  });
+  document.querySelectorAll('.mobile-nav-item').forEach(btn => {
+    btn.classList.toggle('active', btn.getAttribute('data-view') === viewId);
+  });
+  document.querySelectorAll('.view-content').forEach(view => {
+    view.classList.toggle('active', view.id === viewId);
+  });
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+};
+
+window.toggleMobileNav = function() {
+  const menu = document.getElementById('mobile-nav-dropdown');
+  if (menu) menu.classList.toggle('show');
+};
+
+window.switchViewMobile = function(viewId) {
+  switchView(viewId);
+  const menu = document.getElementById('mobile-nav-dropdown');
+  if (menu) menu.classList.remove('show');
+};
+
 // Nigerian Meteorological Solar Insolation Database (Wh/m²/day)
 const LOCATION_PRESETS = {
   'site-study': [5976, 5380, 5631, 5256, 4740, 3746, 3891, 4329, 4188, 4772, 5048, 5694],
@@ -127,35 +152,6 @@ window.removeBOQRow = function(index) {
   BOQState.splice(index, 1);
   renderBOQTable();
   calculateAll();
-};
-
-/* View Navigation & Mobile Hamburger Controls */
-window.switchView = function(viewId) {
-  document.querySelectorAll('.view-btn').forEach(btn => {
-    btn.classList.toggle('active', btn.getAttribute('data-view') === viewId);
-  });
-  document.querySelectorAll('.mobile-nav-item').forEach(btn => {
-    btn.classList.toggle('active', btn.getAttribute('data-view') === viewId);
-  });
-  document.querySelectorAll('.view-content').forEach(view => {
-    view.classList.toggle('active', view.id === viewId);
-  });
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-};
-
-window.toggleMobileNav = function() {
-  const menu = document.getElementById('mobile-nav-dropdown');
-  if (menu) {
-    menu.classList.toggle('show');
-  }
-};
-
-window.switchViewMobile = function(viewId) {
-  switchView(viewId);
-  const menu = document.getElementById('mobile-nav-dropdown');
-  if (menu) {
-    menu.classList.remove('show');
-  }
 };
 
 function initPresetDropdown() {
