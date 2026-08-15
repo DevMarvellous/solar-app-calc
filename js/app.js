@@ -476,27 +476,31 @@ function calculateAll() {
   if (tblInv) tblInv.textContent = `${invKW} kW Pure Sine Wave Inverter`;
   if (tblGen) tblGen.textContent = `${standardGenKVA} kVA Generator`;
 
-  // 5. Update Report Elements
-  document.getElementById('rep-installed-kw').textContent = `${installedKW} kW`;
-  document.getElementById('rep-expected-kw').textContent = `${expectedKW} kW`;
-  const repInstalledMeta = document.getElementById('rep-installed-meta');
-  if (repInstalledMeta) repInstalledMeta.textContent = `${installedKW} kW Array`;
+  // 5. Update Report Elements (with null safety)
+  const setText = (id, val) => {
+    const el = document.getElementById(id);
+    if (el) el.textContent = val;
+  };
 
-  document.getElementById('rep-solar-capex').textContent = fmtNaira(solarCapex);
-  document.getElementById('rep-solar-lcc').textContent = fmtNairaM(totalSolarLCC);
-  document.getElementById('rep-solar-lcoe').textContent = `₦${solarLCOE} / kWh`;
-  document.getElementById('rep-solar-payback').textContent = `${paybackYears} Years`;
+  setText('rep-installed-kw', `${installedKW} kW`);
+  setText('rep-expected-kw', `${expectedKW} kW`);
+  setText('rep-installed-meta', `${installedKW} kW Array`);
 
-  document.getElementById('rep-diesel-capex').textContent = `₦0 (Sunk)`;
-  document.getElementById('rep-diesel-fuel').textContent = `${fmtNaira(dieselAnnualFuelCost)} / yr`;
-  document.getElementById('rep-diesel-lcc').textContent = fmtNairaM(totalDieselLCC);
-  document.getElementById('rep-diesel-lcoe').textContent = `₦${dieselLCOE} / kWh`;
+  setText('rep-solar-capex', fmtNaira(solarCapex));
+  setText('rep-solar-lcc', fmtNairaM(totalSolarLCC));
+  setText('rep-solar-lcoe', `₦${solarLCOE} / kWh`);
+  setText('rep-solar-payback', `${paybackYears} Years`);
 
-  document.getElementById('rep-hybrid-capex').textContent = fmtNaira(solarCapex);
-  document.getElementById('rep-hybrid-fuel').textContent = `${fmtNaira(Math.round(dieselAnnualFuelCost * 0.25))} / yr`;
-  document.getElementById('rep-hybrid-lcc').textContent = fmtNairaM(Math.round(totalSolarLCC * 0.85 + totalDieselLCC * 0.25));
-  document.getElementById('rep-hybrid-lcoe').textContent = `₦${(solarLCOE * 0.85).toFixed(1)} / kWh`;
-  document.getElementById('rep-hybrid-payback').textContent = `${(paybackYears * 0.8).toFixed(1)} Years`;
+  setText('rep-diesel-capex', `₦0 (Sunk)`);
+  setText('rep-diesel-fuel', `${fmtNaira(dieselAnnualFuelCost)} / yr`);
+  setText('rep-diesel-lcc', fmtNairaM(totalDieselLCC));
+  setText('rep-diesel-lcoe', `₦${dieselLCOE} / kWh`);
+
+  setText('rep-hybrid-capex', fmtNaira(solarCapex));
+  setText('rep-hybrid-fuel', `${fmtNaira(Math.round(dieselAnnualFuelCost * 0.25))} / yr`);
+  setText('rep-hybrid-lcc', fmtNairaM(Math.round(totalSolarLCC * 0.85 + totalDieselLCC * 0.25)));
+  setText('rep-hybrid-lcoe', `₦${(solarLCOE * 0.85).toFixed(1)} / kWh`);
+  setText('rep-hybrid-payback', `${(paybackYears * 0.8).toFixed(1)} Years`);
 
   // Monthly Table in Report
   const monthlyTbody = document.getElementById('rep-monthly-tbody');
