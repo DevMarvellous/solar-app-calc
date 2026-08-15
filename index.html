@@ -52,18 +52,154 @@
   <!-- Main Container -->
   <main class="container">
 
-    <!-- Top View Navigation Switcher -->
+    <!-- Top View Navigation Switcher (4 Pages) -->
     <nav class="view-nav no-print">
-      <button class="view-btn active" data-view="view-simulator" onclick="switchView('view-simulator')">
-        🔬 1. Solar Array Simulator & Cost Analysis
+      <button class="view-btn active" data-view="view-calculation" onclick="switchView('view-calculation')">
+        🧮 1. System Calculations
       </button>
-      <button class="view-btn" data-view="view-report" onclick="switchView('view-report')">
-        📄 2. System Sizing & Financial Report
+      <button class="view-btn" data-view="view-simulator" onclick="switchView('view-simulator')">
+        🔬 2. Solar Panel Array Simulator
+      </button>
+      <button class="view-btn" data-view="view-cost-savings" onclick="switchView('view-cost-savings')">
+        💰 3. Client Cost Savings (LCCA)
+      </button>
+      <button class="view-btn" data-view="view-connections" onclick="switchView('view-connections')">
+        🔌 4. System Connections & Wiring
       </button>
     </nav>
 
-    <!-- VIEW 1: SOLAR PANEL ARRAY SIMULATOR & LCCA WORKSPACE -->
-    <div id="view-simulator" class="view-content active">
+    <!-- PAGE 1: SYSTEM CALCULATIONS & SOLAR INSOLATION PARAMETERS -->
+    <div id="view-calculation" class="view-content active">
+      
+      <!-- Top Sizing Engineering Inputs Card -->
+      <div class="main-card">
+        <div class="card-title-group">
+          <div>
+            <h2 class="card-heading">
+              <span>🧮</span>
+              <span>Engineering Calculations & System Sizing Parameters</span>
+            </h2>
+            <p class="card-subheading">Set daily energy consumption load, peak power, solar irradiation data, and discount parameters.</p>
+          </div>
+          <button class="btn btn-primary btn-sm" onclick="switchView('view-simulator')">
+            Next: Panel Simulator →
+          </button>
+        </div>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1rem; margin-bottom: 1.25rem;">
+          
+          <div style="background: var(--bg-subtle); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 1rem;">
+            <h3 style="font-size: 0.95rem; margin-bottom: 0.75rem; color: var(--primary);">⚡ Load & Consumption Inputs</h3>
+            <div style="display: flex; flex-direction: column; gap: 0.75rem;">
+              <div>
+                <label style="font-size: 0.8rem; color: var(--text-secondary); display: block; margin-bottom: 0.2rem;">Daily Energy Demand (kWh/day):</label>
+                <input type="number" id="inp-daily-kwh" class="form-input-clean" value="46.94" step="0.1" />
+              </div>
+              <div>
+                <label style="font-size: 0.8rem; color: var(--text-secondary); display: block; margin-bottom: 0.2rem;">Peak Load Demand (kW):</label>
+                <input type="number" id="inp-peak-kw" class="form-input-clean" value="9.60" step="0.1" />
+              </div>
+              <div>
+                <label style="font-size: 0.8rem; color: var(--text-secondary); display: block; margin-bottom: 0.2rem;">Required Days of Autonomy (Backup):</label>
+                <input type="number" id="inp-autonomy-days" class="form-input-clean" value="1.5" step="0.5" />
+              </div>
+            </div>
+          </div>
+
+          <div style="background: var(--bg-subtle); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 1rem;">
+            <h3 style="font-size: 0.95rem; margin-bottom: 0.75rem; color: var(--solar);">☀️ Solar PV & Battery Parameters</h3>
+            <div style="display: flex; flex-direction: column; gap: 0.75rem;">
+              <div>
+                <label style="font-size: 0.8rem; color: var(--text-secondary); display: block; margin-bottom: 0.2rem;">Battery System Technology:</label>
+                <select id="inp-batt-type" class="form-input-clean">
+                  <option value="lifepo4" selected>Lithium LiFePO4 (85% DoD, 15yr Life)</option>
+                  <option value="gel">Deep Cycle Gel / AGM (50% DoD, 3yr Life)</option>
+                </select>
+              </div>
+              <div>
+                <label style="font-size: 0.8rem; color: var(--text-secondary); display: block; margin-bottom: 0.2rem;">DC Bus Voltage (V):</label>
+                <select id="inp-dc-bus" class="form-input-clean">
+                  <option value="48" selected>48 V DC System</option>
+                  <option value="24">24 V DC System</option>
+                </select>
+              </div>
+              <div>
+                <label style="font-size: 0.8rem; color: var(--text-secondary); display: block; margin-bottom: 0.2rem;">PV Derating Factor (System Losses):</label>
+                <input type="number" id="inp-derating" class="form-input-clean" value="0.80" step="0.05" />
+              </div>
+            </div>
+          </div>
+
+          <div style="background: var(--bg-subtle); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 1rem;">
+            <h3 style="font-size: 0.95rem; margin-bottom: 0.75rem; color: var(--diesel);">🛢️ Financial & Generator Inputs</h3>
+            <div style="display: flex; flex-direction: column; gap: 0.75rem;">
+              <div>
+                <label style="font-size: 0.8rem; color: var(--text-secondary); display: block; margin-bottom: 0.2rem;">Diesel Fuel Price (₦/Litre):</label>
+                <input type="number" id="inp-diesel-price" class="form-input-clean" value="1350" step="10" />
+              </div>
+              <div>
+                <label style="font-size: 0.8rem; color: var(--text-secondary); display: block; margin-bottom: 0.2rem;">Generator Daily Run Time (Hours/day):</label>
+                <input type="number" id="inp-gen-hours" class="form-input-clean" value="16" step="1" />
+              </div>
+              <div>
+                <label style="font-size: 0.8rem; color: var(--text-secondary); display: block; margin-bottom: 0.2rem;">Discount Rate / Inflation (%):</label>
+                <input type="number" id="inp-discount-rate" class="form-input-clean" value="10" step="1" />
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- 12-Month Solar Insolation Card -->
+      <div class="main-card">
+        <div class="card-title-group">
+          <div>
+            <h3 class="card-heading">
+              <span>☀️</span>
+              <span>12-Month Nigerian Solar Irradiation Insolation Input (Wh/m²/day)</span>
+            </h3>
+            <p class="card-subheading">Select location preset or customize monthly solar insolation values.</p>
+          </div>
+          <div>
+            <select id="preset-site-select" class="form-input-clean" style="width: auto;">
+              <option value="site-study" selected>Mushin Axis, Lagos (MG0001 Table 3.3)</option>
+              <option value="lagos">Lagos Coastal (4.42 kWh/m²)</option>
+              <option value="abuja">Abuja (FCT)</option>
+              <option value="kano">Kano (North - 6.08 kWh/m²)</option>
+              <option value="port-harcourt">Port Harcourt (South)</option>
+              <option value="enugu">Enugu (East)</option>
+              <option value="sokoto">Sokoto (North-West)</option>
+              <option value="jos">Jos (Plateau)</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="month-grid">
+          <div class="month-cell"><span>Jan</span><input type="number" id="m-0" value="5976" /></div>
+          <div class="month-cell"><span>Feb</span><input type="number" id="m-1" value="5380" /></div>
+          <div class="month-cell"><span>Mar</span><input type="number" id="m-2" value="5631" /></div>
+          <div class="month-cell"><span>Apr</span><input type="number" id="m-3" value="5256" /></div>
+          <div class="month-cell"><span>May</span><input type="number" id="m-4" value="4740" /></div>
+          <div class="month-cell"><span>Jun</span><input type="number" id="m-5" value="3746" /></div>
+          <div class="month-cell"><span>Jul</span><input type="number" id="m-6" value="3891" /></div>
+          <div class="month-cell"><span>Aug</span><input type="number" id="m-7" value="4329" /></div>
+          <div class="month-cell"><span>Sep</span><input type="number" id="m-8" value="4188" /></div>
+          <div class="month-cell"><span>Oct</span><input type="number" id="m-9" value="4772" /></div>
+          <div class="month-cell"><span>Nov</span><input type="number" id="m-10" value="5048" /></div>
+          <div class="month-cell"><span>Dec</span><input type="number" id="m-11" value="5694" /></div>
+        </div>
+
+        <div style="margin-top: 0.6rem; font-size: 0.8rem; color: var(--text-secondary); display: flex; justify-content: space-between;">
+          <span>Annual Sun Hours: <strong id="calculated-avg-psh" style="color: var(--solar);">4.89 hrs/day</strong></span>
+          <span style="color: var(--text-muted);">(Annual PV Yield: ~58,651 kWh)</span>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- PAGE 2: SOLAR PANEL ARRAY SIMULATOR -->
+    <div id="view-simulator" class="view-content">
       
       <!-- Top Simulation Control & Drag-and-Drop Dock -->
       <div class="main-card">
@@ -217,16 +353,28 @@
 
       </div>
 
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- PAGE 3: CLIENT COST SAVINGS (LCCA & FINANCIAL ADVANTAGE) -->
+    <div id="view-cost-savings" class="view-content">
+      
       <!-- 3-Card Clean Life Cycle Cost (LCCA) Summary -->
       <div class="main-card">
         <div class="card-title-group">
           <div>
             <h3 class="card-heading">
               <span>💰</span>
-              <span>7-Year Life Cycle Cost Analysis (LCCA) Summary</span>
+              <span>7-Year Life Cycle Cost Analysis (LCCA) & Client Savings</span>
             </h3>
-            <p class="card-subheading">Economic comparison of generating power via Solar PV vs running a Diesel Generator in Nigeria (Megaloite Case Study).</p>
+            <p class="card-subheading">Economic comparison of generating power via Solar PV vs running a Diesel Generator in Nigeria.</p>
           </div>
+          <button class="btn btn-primary btn-sm" onclick="switchView('view-connections')">
+            Next: Wiring & Connections →
+          </button>
         </div>
 
         <div class="lcca-three-card-grid">
@@ -286,48 +434,171 @@
           </div>
 
         </div>
+      </div>
 
-        <!-- 12-Month Solar Radiation Inputs -->
-        <div style="background: var(--bg-subtle); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 0.85rem; margin-top: 1rem;">
-          <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 0.5rem;">
-            <div>
-              <strong style="font-size: 0.825rem; color: var(--text-main);">☀️ Meteorological Solar Radiation (Wh/m²/day)</strong>
-              <p style="font-size: 0.725rem; color: var(--text-muted); margin: 0;">12 monthly insolation values (Mushin, Lagos / Case Study Table 3.3).</p>
+      <!-- Financial Cash Flow Schedule Card -->
+      <div class="main-card">
+        <div class="card-title-group">
+          <div>
+            <h3 class="card-heading">
+              <span>📊</span>
+              <span>7-Year Discounted Cash Flow Breakdown</span>
+            </h3>
+            <p class="card-subheading">Year-by-year cash outflow schedule comparing Solar PV vs Diesel Generator.</p>
+          </div>
+          <button class="btn btn-secondary btn-sm" onclick="exportCSV()">
+            📥 Download CSV Schedule
+          </button>
+        </div>
+
+        <div style="overflow-x: auto;">
+          <table class="report-table">
+            <thead>
+              <tr>
+                <th>Timeline</th>
+                <th>Solar PV Annual (₦)</th>
+                <th>Solar Cum. LCC (₦)</th>
+                <th>Diesel Fuel / Yr (₦)</th>
+                <th>Diesel Cum. LCC (₦)</th>
+                <th>Hybrid Cum. LCC (₦)</th>
+              </tr>
+            </thead>
+            <tbody id="rep-cashflow-tbody">
+              <!-- Rendered dynamically -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- PAGE 4: SYSTEM CONNECTIONS & SCHEMATIC DIAGRAM -->
+    <div id="view-connections" class="view-content">
+      
+      <!-- Electrical Wiring Architecture Card -->
+      <div class="main-card">
+        <div class="card-title-group">
+          <div>
+            <h3 class="card-heading">
+              <span>🔌</span>
+              <span>System Electrical Connections & Component Wiring Diagram</span>
+            </h3>
+            <p class="card-subheading">Live single-line interconnection flow diagram connecting Solar Array, MPPT Controller, Battery Bank, Inverter, Grid/Gen ATS, and Load Center.</p>
+          </div>
+          <button class="btn btn-primary btn-sm" onclick="window.print()">
+            🖨️ Export PDF Wiring Spec
+          </button>
+        </div>
+
+        <!-- Single-line Connection Flow Diagram -->
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin: 1.5rem 0;">
+          
+          <!-- Block 1: Solar Array -->
+          <div style="background: var(--solar-bg); border: 2px solid var(--solar); border-radius: var(--radius-md); padding: 1rem; text-align: center; position: relative;">
+            <div style="font-size: 2rem;">☀️</div>
+            <h4 style="font-size: 0.95rem; color: var(--solar); margin: 0.3rem 0;">1. Solar Panel Array</h4>
+            <div style="font-size: 0.8rem; font-weight: 700; color: var(--text-main);" id="conn-solar-kw">12.0 kWp DC</div>
+            <div style="font-size: 0.725rem; color: var(--text-secondary); margin-top: 0.3rem;">String DC Cabling → PV Isolator Box</div>
+            <div style="margin-top: 0.5rem; background: #ffffff; border: 1px solid var(--solar-border); border-radius: 4px; padding: 0.25rem; font-size: 0.7rem; font-weight: 700;">
+              DC Bus: ~350V - 450V DC
             </div>
-            <div style="display: flex; align-items: center; gap: 0.35rem;">
-              <span style="font-size: 0.75rem; color: var(--text-secondary); font-weight: 700;">Preset:</span>
-              <select id="preset-site-select" class="form-input-clean" style="width: auto; padding: 0.2rem 0.45rem; font-size: 0.75rem;">
-                <option value="site-study" selected>Mushin Axis, Lagos (MG0001 Table 3.3)</option>
-                <option value="lagos">Lagos Coastal (4.42 kWh/m²)</option>
-                <option value="abuja">Abuja (FCT)</option>
-                <option value="kano">Kano (North - 6.08 kWh/m²)</option>
-                <option value="port-harcourt">Port Harcourt (South)</option>
-                <option value="enugu">Enugu (East)</option>
-                <option value="sokoto">Sokoto (North-West)</option>
-                <option value="jos">Jos (Plateau)</option>
-              </select>
+          </div>
+
+          <!-- Connection Arrow 1 -->
+          <div style="display: flex; align-items: center; justify-content: center; font-size: 1.5rem; color: var(--primary);">
+            ➡️
+          </div>
+
+          <!-- Block 2: MPPT Charge Controller -->
+          <div style="background: var(--primary-bg); border: 2px solid var(--primary); border-radius: var(--radius-md); padding: 1rem; text-align: center;">
+            <div style="font-size: 2rem;">⚡</div>
+            <h4 style="font-size: 0.95rem; color: var(--primary); margin: 0.3rem 0;">2. MPPT Controller</h4>
+            <div style="font-size: 0.8rem; font-weight: 700; color: var(--text-main);" id="conn-mppt-amps">250A MPPT</div>
+            <div style="font-size: 0.725rem; color: var(--text-secondary); margin-top: 0.3rem;">Steps high voltage DC down to 48V Bus</div>
+            <div style="margin-top: 0.5rem; background: #ffffff; border: 1px solid var(--border); border-radius: 4px; padding: 0.25rem; font-size: 0.7rem; font-weight: 700;">
+              Efficiency: 98% Peak
             </div>
           </div>
 
-          <div class="month-grid">
-            <div class="month-cell"><span>Jan</span><input type="number" id="m-0" value="5976" /></div>
-            <div class="month-cell"><span>Feb</span><input type="number" id="m-1" value="5380" /></div>
-            <div class="month-cell"><span>Mar</span><input type="number" id="m-2" value="5631" /></div>
-            <div class="month-cell"><span>Apr</span><input type="number" id="m-3" value="5256" /></div>
-            <div class="month-cell"><span>May</span><input type="number" id="m-4" value="4740" /></div>
-            <div class="month-cell"><span>Jun</span><input type="number" id="m-5" value="3746" /></div>
-            <div class="month-cell"><span>Jul</span><input type="number" id="m-6" value="3891" /></div>
-            <div class="month-cell"><span>Aug</span><input type="number" id="m-7" value="4329" /></div>
-            <div class="month-cell"><span>Sep</span><input type="number" id="m-8" value="4188" /></div>
-            <div class="month-cell"><span>Oct</span><input type="number" id="m-9" value="4772" /></div>
-            <div class="month-cell"><span>Nov</span><input type="number" id="m-10" value="5048" /></div>
-            <div class="month-cell"><span>Dec</span><input type="number" id="m-11" value="5694" /></div>
+          <!-- Connection Arrow 2 -->
+          <div style="display: flex; align-items: center; justify-content: center; font-size: 1.5rem; color: var(--primary);">
+            ↕️
           </div>
 
-          <div style="margin-top: 0.4rem; font-size: 0.75rem; color: var(--text-secondary); display: flex; justify-content: space-between;">
-            <span>Annual Sun Hours: <strong id="calculated-avg-psh" style="color: var(--solar);">4.89 hrs/day</strong></span>
-            <span style="color: var(--text-muted);">(Annual PV Yield: 58,651 kWh)</span>
+          <!-- Block 3: Battery Energy Storage -->
+          <div style="background: var(--success-bg); border: 2px solid var(--success); border-radius: var(--radius-md); padding: 1rem; text-align: center;">
+            <div style="font-size: 2rem;">🔋</div>
+            <h4 style="font-size: 0.95rem; color: var(--success); margin: 0.3rem 0;">3. Battery Storage</h4>
+            <div style="font-size: 0.8rem; font-weight: 700; color: var(--text-main);" id="conn-batt-storage">82.8 kWh (48V)</div>
+            <div style="font-size: 0.725rem; color: var(--text-secondary); margin-top: 0.3rem;" id="conn-batt-packs">17 × 5.12kWh Lithium LiFePO4</div>
+            <div style="margin-top: 0.5rem; background: #ffffff; border: 1px solid var(--success-border); border-radius: 4px; padding: 0.25rem; font-size: 0.7rem; font-weight: 700;">
+              DoD: 85% Usable Energy
+            </div>
           </div>
+
+          <!-- Connection Arrow 3 -->
+          <div style="display: flex; align-items: center; justify-content: center; font-size: 1.5rem; color: var(--primary);">
+            ➡️
+          </div>
+
+          <!-- Block 4: Inverter & AC Distribution -->
+          <div style="background: #f8fafc; border: 2px solid #0f172a; border-radius: var(--radius-md); padding: 1rem; text-align: center;">
+            <div style="font-size: 2rem;">🎛️</div>
+            <h4 style="font-size: 0.95rem; color: #0f172a; margin: 0.3rem 0;">4. Pure Sine Inverter</h4>
+            <div style="font-size: 0.8rem; font-weight: 700; color: var(--text-main);" id="conn-inverter-kva">15.0 kVA (12.0 kW)</div>
+            <div style="font-size: 0.725rem; color: var(--text-secondary); margin-top: 0.3rem;">DC to 230V AC Single/3-Phase</div>
+            <div style="margin-top: 0.5rem; background: #ffffff; border: 1px solid var(--border); border-radius: 4px; padding: 0.25rem; font-size: 0.7rem; font-weight: 700;">
+              Output: 230V AC @ 50Hz
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Detailed Connection Specifications Table -->
+        <h4 style="font-size: 0.9rem; margin: 1.25rem 0 0.5rem 0; color: var(--text-main);">📋 Detailed System Interconnection Specifications</h4>
+        <div style="overflow-x: auto;">
+          <table class="report-table">
+            <thead>
+              <tr>
+                <th>Component Stage</th>
+                <th>Sizing & Rating</th>
+                <th>Cable / Terminal Spec</th>
+                <th>Protection Device</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>1. Solar PV Array</strong></td>
+                <td id="table-conn-solar">12.00 kWp (20 Panels)</td>
+                <td>4mm² / 6mm² Solar PV Cable (Double Insulated)</td>
+                <td>1000V DC Surge Protector (SPD) + 32A DC MCB</td>
+              </tr>
+              <tr>
+                <td><strong>2. Charge Controller (MPPT)</strong></td>
+                <td id="table-conn-mppt">250A MPPT Controller</td>
+                <td>35mm² / 50mm² Flexible Copper DC Cables</td>
+                <td>250A DC Circuit Breaker / MCCB</td>
+              </tr>
+              <tr>
+                <td><strong>3. Battery Bank (48V)</strong></td>
+                <td id="table-conn-batt">82.8 kWh Storage Bank</td>
+                <td>70mm² Heavy Duty Battery Interconnectors</td>
+                <td>250A NH Fuse / Battery Isolator Switch</td>
+              </tr>
+              <tr>
+                <td><strong>4. Inverter & Changeover</strong></td>
+                <td id="table-conn-inv">15.0 kVA Pure Sine Inverter</td>
+                <td>16mm² 3-Core Armored AC Cable</td>
+                <td>63A 2-Pole AC Breaker + Dual Power ATS Switch</td>
+              </tr>
+              <tr>
+                <td><strong>5. Backup Generator</strong></td>
+                <td id="table-conn-gen">18.75 kVA Diesel Generator</td>
+                <td>16mm² Armored Cable to Automatic Transfer Switch</td>
+                <td>63A Mains Changeover / Generator Breaker</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
 
       </div>

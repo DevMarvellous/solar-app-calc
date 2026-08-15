@@ -396,7 +396,29 @@ function calculateAll() {
   document.getElementById('box-annual-savings').textContent = `${fmtNairaM(dieselAnnualFuelCost - solarOM)} / yr`;
   document.getElementById('box-lcoe-diff').textContent = `₦${Math.abs(Number((dieselLCOE - solarLCOE).toFixed(1)))}/kWh cheaper`;
 
-  // 4. Update Report Elements
+  // 4. Update Page 4 Connections Diagram & Table Elements
+  const elSolarKw = document.getElementById('conn-solar-kw');
+  const elMpptAmps = document.getElementById('conn-mppt-amps');
+  const elBattStore = document.getElementById('conn-batt-storage');
+  const elInvKva = document.getElementById('conn-inverter-kva');
+  if (elSolarKw) elSolarKw.textContent = `${installedKW} kWp DC`;
+  if (elMpptAmps) elMpptAmps.textContent = `${mpptAmps}A MPPT`;
+  if (elBattStore) elBattStore.textContent = `${battKWh} kWh (48V Bus)`;
+  if (elInvKva) elInvKva.textContent = `${inverterKVA} kVA Inverter`;
+
+  const tblSolar = document.getElementById('table-conn-solar');
+  const tblMppt = document.getElementById('table-conn-mppt');
+  const tblBatt = document.getElementById('table-conn-batt');
+  const tblInv = document.getElementById('table-conn-inv');
+  const tblGen = document.getElementById('table-conn-gen');
+
+  if (tblSolar) tblSolar.textContent = `${installedKW} kWp (${SimulatorState.panels.length} Modules)`;
+  if (tblMppt) tblMppt.textContent = `${mpptAmps}A MPPT Controller`;
+  if (tblBatt) tblBatt.textContent = `${battKWh} kWh Bank (${battAh} Ah @ 48V DC)`;
+  if (tblInv) tblInv.textContent = `${inverterKVA} kVA Pure Sine Wave Inverter`;
+  if (tblGen) tblGen.textContent = `${genKVA} kVA Generator`;
+
+  // 5. Update Report Elements
   document.getElementById('rep-installed-kw').textContent = `${installedKW} kW`;
   document.getElementById('rep-expected-kw').textContent = `${expectedKW} kW`;
   const repInstalledMeta = document.getElementById('rep-installed-meta');
