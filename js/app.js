@@ -453,10 +453,12 @@ function calculateAll() {
   const elMpptAmps = document.getElementById('conn-mppt-amps');
   const elBattStore = document.getElementById('conn-batt-storage');
   const elInvKva = document.getElementById('conn-inverter-kva');
+  const elGenKva = document.getElementById('conn-gen-kva');
   if (elSolarKw) elSolarKw.textContent = `${installedKW} kWp DC`;
   if (elMpptAmps) elMpptAmps.textContent = `${mpptAmps}A MPPT`;
   if (elBattStore) elBattStore.textContent = `${battKWh} kWh (48V Bus)`;
-  if (elInvKva) elInvKva.textContent = `${invKW} kW (${standardInverterKVA} kVA) Inverter`;
+  if (elInvKva) elInvKva.textContent = `${invKW} kW Inverter`;
+  if (elGenKva) elGenKva.textContent = `${standardGenKVA} kVA Generator`;
 
   const tblSolar = document.getElementById('table-conn-solar');
   const tblMppt = document.getElementById('table-conn-mppt');
@@ -467,8 +469,8 @@ function calculateAll() {
   if (tblSolar) tblSolar.textContent = `${installedKW} kWp (${SimulatorState.panels.length} Modules)`;
   if (tblMppt) tblMppt.textContent = `${mpptAmps}A MPPT Controller`;
   if (tblBatt) tblBatt.textContent = `${battKWh} kWh Bank (${battAh} Ah @ 48V DC)`;
-  if (tblInv) tblInv.textContent = `${invKW} kW (${standardInverterKVA} kVA) Pure Sine Wave Inverter`;
-  if (tblGen) tblGen.textContent = `${genKVA} kVA Generator`;
+  if (tblInv) tblInv.textContent = `${invKW} kW Pure Sine Wave Inverter`;
+  if (tblGen) tblGen.textContent = `${standardGenKVA} kVA Generator`;
 
   // 5. Update Report Elements
   document.getElementById('rep-installed-kw').textContent = `${installedKW} kW`;

@@ -551,13 +551,29 @@
           </div>
 
           <!-- Block 4: Inverter & AC Distribution -->
-          <div style="background: #f8fafc; border: 2px solid #0f172a; border-radius: var(--radius-md); padding: 1rem; text-align: center;">
+          <div style="background: var(--bg-subtle); border: 2px solid var(--primary); border-radius: var(--radius-md); padding: 1rem; text-align: center;">
             <div style="font-size: 2rem;">🎛️</div>
-            <h4 style="font-size: 0.95rem; color: #0f172a; margin: 0.3rem 0;">4. Pure Sine Inverter</h4>
-            <div style="font-size: 0.8rem; font-weight: 700; color: var(--text-main);" id="conn-inverter-kva">15.0 kVA (12.0 kW)</div>
-            <div style="font-size: 0.725rem; color: var(--text-secondary); margin-top: 0.3rem;">DC to 230V AC Single/3-Phase</div>
-            <div style="margin-top: 0.5rem; background: #ffffff; border: 1px solid var(--border); border-radius: 4px; padding: 0.25rem; font-size: 0.7rem; font-weight: 700;">
+            <h4 style="font-size: 0.95rem; color: var(--primary); margin: 0.3rem 0;">4. Pure Sine Inverter</h4>
+            <div style="font-size: 0.8rem; font-weight: 700; color: var(--text-main);" id="conn-inverter-kva">12.0 kW Inverter</div>
+            <div style="font-size: 0.725rem; color: var(--text-secondary); margin-top: 0.3rem;">DC to 230V AC Pure Sine Wave</div>
+            <div style="margin-top: 0.5rem; background: var(--bg-card); border: 1px solid var(--border); border-radius: 4px; padding: 0.25rem; font-size: 0.7rem; font-weight: 700;">
               Output: 230V AC @ 50Hz
+            </div>
+          </div>
+
+          <!-- Connection Arrow 4 -->
+          <div style="display: flex; align-items: center; justify-content: center; font-size: 1.5rem; color: var(--primary);">
+            ⚡
+          </div>
+
+          <!-- Block 5: Backup Diesel Generator -->
+          <div style="background: var(--diesel-bg); border: 2px solid var(--diesel); border-radius: var(--radius-md); padding: 1rem; text-align: center;">
+            <div style="font-size: 2rem;">⛽</div>
+            <h4 style="font-size: 0.95rem; color: var(--diesel); margin: 0.3rem 0;">5. Backup Generator</h4>
+            <div style="font-size: 0.8rem; font-weight: 700; color: var(--text-main);" id="conn-gen-kva">18.75 kVA Generator</div>
+            <div style="font-size: 0.725rem; color: var(--text-secondary); margin-top: 0.3rem;">Automatic Transfer Switch (ATS)</div>
+            <div style="margin-top: 0.5rem; background: var(--bg-card); border: 1px solid var(--diesel-border); border-radius: 4px; padding: 0.25rem; font-size: 0.7rem; font-weight: 700;">
+              Fuel: Diesel 230V/400V AC
             </div>
           </div>
 
