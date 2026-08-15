@@ -237,20 +237,8 @@ window.deleteIndividualPanel = function(id) {
     alert('At least 1 solar panel must remain in the array.');
     return;
   }
-
-  const card = document.getElementById(`panel-card-${id}`);
-  if (card) {
-    card.style.transition = 'all 180ms ease';
-    card.style.transform = 'scale(0.5)';
-    card.style.opacity = '0';
-    setTimeout(() => {
-      SimulatorState.panels = SimulatorState.panels.filter(p => p.id !== id);
-      renderPhotorealisticRack();
-    }, 160);
-  } else {
-    SimulatorState.panels = SimulatorState.panels.filter(p => p.id !== id);
-    renderPhotorealisticRack();
-  }
+  SimulatorState.panels = SimulatorState.panels.filter(p => p.id !== id);
+  renderPhotorealisticRack();
 };
 
 window.removeSinglePanel = function(index) {
