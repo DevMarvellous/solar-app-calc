@@ -139,7 +139,12 @@ function renderPhotorealisticRack() {
   const modulesHTML = SimulatorState.panels.map((p, idx) => {
     totalWatts += p.watts;
     return `
-      <div class="solar-pv-module">
+      <div class="solar-pv-module" data-panel-id="${p.id}" id="panel-card-${p.id}">
+        <!-- Top-Right Hover Trash Badge for direct individual deletion -->
+        <button class="panel-trash-badge" onclick="deleteIndividualPanel(${p.id})" title="Delete Module #${p.id}">
+          🗑️
+        </button>
+
         <!-- Horizontal Landscape Crystalline Silicon Cell Grid (6x2) -->
         <div class="solar-cell-grid">
           <div class="solar-cell-unit"></div>
@@ -165,8 +170,8 @@ function renderPhotorealisticRack() {
             <span style="font-size: 0.65rem; color: #94a3b8; font-weight: 700;">W</span>
           </div>
 
-          <button class="btn-delete-panel" onclick="removeSinglePanel(${idx})" title="Click to delete this module">
-            &times;
+          <button class="btn-delete-panel" onclick="deleteIndividualPanel(${p.id})" title="Delete Module #${p.id}">
+            🗑️
           </button>
         </div>
       </div>
@@ -208,13 +213,39 @@ window.addSinglePanel = function(watts) {
   renderPhotorealisticRack();
 };
 
+window.deleteIndividualPanel = function(id) {
+  if (SimulatorState.panels.length <= 1) {
+    alert('At least 1 solar panel must remain in the array.');
+    return;
+  }
+
+  const card = document.getElementById(`panel-card-${id}`);
+  if (card) {
+    card.style.transition = 'all 180ms ease';
+    card.style.transform = 'scale(0.5)';
+    card.style.opacity = '0';
+    setTimeout(() => {
+      SimulatorState.panels = SimulatorState.panels.filter(p => p.id !== id);
+      renderPhotorealisticRack();
+    }, 160);
+  } else {
+    SimulatorState.panels = SimulatorState.panels.filter(p => p.id !== id);
+    renderPhotorealisticRack();
+  }
+};
+
 window.removeSinglePanel = function(index) {
   if (SimulatorState.panels.length <= 1) {
     alert('At least 1 solar panel must remain in the array.');
     return;
   }
-  SimulatorState.panels.splice(index, 1);
-  renderPhotorealisticRack();
+  const targetId = SimulatorState.panels[index] ? SimulatorState.panels[index].id : null;
+  if (targetId) {
+    deleteIndividualPanel(targetId);
+  } else {
+    SimulatorState.panels.splice(index, 1);
+    renderPhotorealisticRack();
+  }
 };
 
 window.removeLastPanel = function() {
