@@ -44,7 +44,7 @@
     <!-- Mobile Dropdown Navigation Menu -->
     <div id="mobile-nav-dropdown" class="mobile-nav-menu no-print">
       <button class="mobile-nav-item active" data-view="view-calculation" onclick="switchViewMobile('view-calculation')">
-        🧮 1. System Calculations
+        📋 1. BOQ (Bill of Quantity)
       </button>
       <button class="mobile-nav-item" data-view="view-simulator" onclick="switchViewMobile('view-simulator')">
         🔬 2. Solar Panel Array Simulator
@@ -75,7 +75,7 @@
     <!-- Desktop & Tablet View Navigation Switcher (4 Pages) -->
     <nav class="view-nav no-print">
       <button class="view-btn active" data-view="view-calculation" onclick="switchView('view-calculation')">
-        🧮 1. System Calculations
+        📋 1. BOQ (Bill of Quantity)
       </button>
       <button class="view-btn" data-view="view-simulator" onclick="switchView('view-simulator')">
         🔬 2. Solar Panel Array Simulator
@@ -88,127 +88,128 @@
       </button>
     </nav>
 
-    <!-- PAGE 1: SYSTEM CALCULATIONS & SOLAR INSOLATION PARAMETERS -->
+    <!-- PAGE 1: BILL OF QUANTITY (BOQ) -->
     <div id="view-calculation" class="view-content active">
       
-      <!-- Top Sizing Engineering Inputs Card -->
+      <!-- Official Bill of Quantity (BOQ) Card -->
       <div class="main-card">
         <div class="card-title-group">
           <div>
             <h2 class="card-heading">
-              <span>🧮</span>
-              <span>Engineering Calculations & System Sizing Parameters</span>
+              <span>📋</span>
+              <span>Official Bill of Quantities (BOQ) - 12kW Solar Hybrid System</span>
             </h2>
-            <p class="card-subheading">Set daily energy consumption load, peak power, solar irradiation data, and discount parameters.</p>
+            <p class="card-subheading">Turnkey Component Breakdown, Unit Rates, Accessories, Protection, Cabling, Logistics & Installation.</p>
           </div>
-          <button class="btn btn-primary btn-sm" onclick="switchView('view-simulator')">
-            Next: Panel Simulator →
-          </button>
-        </div>
-
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1rem; margin-bottom: 1.25rem;">
-          
-          <div style="background: var(--bg-subtle); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 1rem;">
-            <h3 style="font-size: 0.95rem; margin-bottom: 0.75rem; color: var(--primary);">⚡ Load & Power Demand Inputs</h3>
-            <div style="display: flex; flex-direction: column; gap: 0.75rem;">
-              <div>
-                <label style="font-size: 0.8rem; color: var(--text-secondary); display: block; margin-bottom: 0.2rem;">Peak Load Demand (kW):</label>
-                <input type="number" id="inp-peak-kw" class="form-input-clean" value="9.60" step="0.1" />
-              </div>
-              <div>
-                <label style="font-size: 0.8rem; color: var(--text-secondary); display: block; margin-bottom: 0.2rem;">Required Days of Autonomy (Backup):</label>
-                <input type="number" id="inp-autonomy-days" class="form-input-clean" value="1.5" step="0.5" />
-              </div>
-            </div>
-          </div>
-
-          <div style="background: var(--bg-subtle); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 1rem;">
-            <h3 style="font-size: 0.95rem; margin-bottom: 0.75rem; color: var(--solar);">☀️ Solar PV & Battery Parameters</h3>
-            <div style="display: flex; flex-direction: column; gap: 0.75rem;">
-              <div>
-                <label style="font-size: 0.8rem; color: var(--text-secondary); display: block; margin-bottom: 0.2rem;">Battery System Technology:</label>
-                <select id="inp-batt-type" class="form-input-clean">
-                  <option value="lifepo4" selected>Lithium LiFePO4 (85% DoD, 15yr Life)</option>
-                  <option value="gel">Deep Cycle Gel / AGM (50% DoD, 3yr Life)</option>
-                </select>
-              </div>
-              <div>
-                <label style="font-size: 0.8rem; color: var(--text-secondary); display: block; margin-bottom: 0.2rem;">DC Bus Voltage (V):</label>
-                <select id="inp-dc-bus" class="form-input-clean">
-                  <option value="48" selected>48 V DC System</option>
-                  <option value="24">24 V DC System</option>
-                </select>
-              </div>
-              <div>
-                <label style="font-size: 0.8rem; color: var(--text-secondary); display: block; margin-bottom: 0.2rem;">PV Derating Factor (System Losses):</label>
-                <input type="number" id="inp-derating" class="form-input-clean" value="0.80" step="0.05" />
-              </div>
-            </div>
-          </div>
-
-          <div style="background: var(--bg-subtle); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 1rem;">
-            <h3 style="font-size: 0.95rem; margin-bottom: 0.75rem; color: var(--diesel);">🛢️ Financial & Generator Inputs</h3>
-            <div style="display: flex; flex-direction: column; gap: 0.75rem;">
-              <div>
-                <label style="font-size: 0.8rem; color: var(--text-secondary); display: block; margin-bottom: 0.2rem;">Diesel Fuel Price (₦/Litre):</label>
-                <input type="number" id="inp-diesel-price" class="form-input-clean" value="1350" step="10" />
-              </div>
-              <div>
-                <label style="font-size: 0.8rem; color: var(--text-secondary); display: block; margin-bottom: 0.2rem;">Generator Daily Run Time (Hours/day):</label>
-                <input type="number" id="inp-gen-hours" class="form-input-clean" value="16" step="1" />
-              </div>
-              <div>
-                <label style="font-size: 0.8rem; color: var(--text-secondary); display: block; margin-bottom: 0.2rem;">Discount Rate / Inflation (%):</label>
-                <input type="number" id="inp-discount-rate" class="form-input-clean" value="10" step="1" />
-              </div>
-            </div>
-          </div>
-
-        </div>
-      </div>
-
-      <!-- 12-Month Solar Insolation Card -->
-      <div class="main-card">
-        <div class="card-title-group">
-          <div>
-            <h3 class="card-heading">
-              <span>☀️</span>
-              <span>12-Month Nigerian Solar Irradiation Insolation Input (Wh/m²/day)</span>
-            </h3>
-            <p class="card-subheading">Select location preset or customize monthly solar insolation values.</p>
-          </div>
-          <div>
-            <select id="preset-site-select" class="form-input-clean" style="width: auto;">
-              <option value="site-study" selected>Mushin Axis, Lagos (MG0001 Table 3.3)</option>
-              <option value="lagos">Lagos Coastal (4.42 kWh/m²)</option>
-              <option value="abuja">Abuja (FCT)</option>
-              <option value="kano">Kano (North - 6.08 kWh/m²)</option>
-              <option value="port-harcourt">Port Harcourt (South)</option>
-              <option value="enugu">Enugu (East)</option>
-              <option value="sokoto">Sokoto (North-West)</option>
-              <option value="jos">Jos (Plateau)</option>
-            </select>
+          <div style="display: flex; gap: 0.5rem;">
+            <button class="btn btn-primary btn-sm" onclick="switchView('view-simulator')">
+              Next: Panel Simulator →
+            </button>
           </div>
         </div>
 
-        <div class="month-grid">
-          <div class="month-cell"><span>Jan</span><input type="number" id="m-0" value="5976" /></div>
-          <div class="month-cell"><span>Feb</span><input type="number" id="m-1" value="5380" /></div>
-          <div class="month-cell"><span>Mar</span><input type="number" id="m-2" value="5631" /></div>
-          <div class="month-cell"><span>Apr</span><input type="number" id="m-3" value="5256" /></div>
-          <div class="month-cell"><span>May</span><input type="number" id="m-4" value="4740" /></div>
-          <div class="month-cell"><span>Jun</span><input type="number" id="m-5" value="3746" /></div>
-          <div class="month-cell"><span>Jul</span><input type="number" id="m-6" value="3891" /></div>
-          <div class="month-cell"><span>Aug</span><input type="number" id="m-7" value="4329" /></div>
-          <div class="month-cell"><span>Sep</span><input type="number" id="m-8" value="4188" /></div>
-          <div class="month-cell"><span>Oct</span><input type="number" id="m-9" value="4772" /></div>
-          <div class="month-cell"><span>Nov</span><input type="number" id="m-10" value="5048" /></div>
-          <div class="month-cell"><span>Dec</span><input type="number" id="m-11" value="5694" /></div>
-        </div>
-
-        <div style="margin-top: 0.6rem; font-size: 0.8rem; color: var(--text-secondary); display: flex; justify-content: space-between;">
-          <span>Annual Sun Hours: <strong id="calculated-avg-psh" style="color: var(--solar);">4.89 hrs/day</strong></span>
-          <span style="color: var(--text-muted);">(Annual PV Yield: ~58,651 kWh)</span>
+        <!-- BOQ Component Breakdown Table -->
+        <div style="overflow-x: auto;">
+          <table class="report-table" style="width: 100%; border-collapse: collapse; margin-bottom: 1.25rem;">
+            <thead>
+              <tr style="background: var(--bg-subtle);">
+                <th style="width: 7%; text-align: center;">ITEM</th>
+                <th style="width: 53%;">DESCRIPTION</th>
+                <th style="width: 20%; text-align: right;">RATE (NGN)</th>
+                <th style="width: 20%; text-align: right;">AMOUNT (NGN)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td style="text-align: center;"><strong>1.0</strong></td>
+                <td><strong>1 unit of DEYE 12KW Solar Hybrid inverter</strong></td>
+                <td style="text-align: right;">₦2,800,000</td>
+                <td style="text-align: right; font-weight: 800; color: var(--primary);">₦2,800,000</td>
+              </tr>
+              <tr>
+                <td style="text-align: center;"><strong>2.0</strong></td>
+                <td><strong>1 unit of DEYE 16KWH Lithium battery</strong></td>
+                <td style="text-align: right;">₦2,700,000</td>
+                <td style="text-align: right; font-weight: 800; color: var(--success);">₦2,700,000</td>
+              </tr>
+              <tr>
+                <td style="text-align: center;"><strong>3.0</strong></td>
+                <td><strong>20pcs of Jinko 620W Monocrystalline Solar panels</strong></td>
+                <td style="text-align: right;">₦145,000</td>
+                <td style="text-align: right; font-weight: 800; color: var(--solar);">₦2,900,000</td>
+              </tr>
+              <tr>
+                <td style="text-align: center;"><strong>4.0</strong></td>
+                <td>Solar mounting accessories; aluminium profiles, bolt and nuts, screws.</td>
+                <td style="text-align: right;">₦80,000</td>
+                <td style="text-align: right; font-weight: 700;">₦80,000</td>
+              </tr>
+              <tr>
+                <td style="text-align: center;"><strong>5.0</strong></td>
+                <td>AC breakers and surge protector with enclosure</td>
+                <td style="text-align: right;">₦50,000</td>
+                <td style="text-align: right; font-weight: 700;">₦50,000</td>
+              </tr>
+              <tr>
+                <td style="text-align: center;"><strong>6.0</strong></td>
+                <td>DC breakers and surge protector with enclosure</td>
+                <td style="text-align: right;">₦50,000</td>
+                <td style="text-align: right; font-weight: 700;">₦50,000</td>
+              </tr>
+              <tr>
+                <td style="text-align: center;"><strong>7.0</strong></td>
+                <td>2pcs of heat aerosol fire breaker</td>
+                <td style="text-align: right;">₦10,000</td>
+                <td style="text-align: right; font-weight: 700;">₦10,000</td>
+              </tr>
+              <tr>
+                <td style="text-align: center;"><strong>8.0</strong></td>
+                <td>Automatic fire off ball extinguisher</td>
+                <td style="text-align: right;">₦20,000</td>
+                <td style="text-align: right; font-weight: 700;">₦20,000</td>
+              </tr>
+              <tr>
+                <td style="text-align: center;"><strong>9.0</strong></td>
+                <td>50 meters of 10mm DC solar cable (1000VDC rating)</td>
+                <td style="text-align: right;">₦5,500 / m</td>
+                <td style="text-align: right; font-weight: 700;">₦275,000</td>
+              </tr>
+              <tr>
+                <td style="text-align: center;"><strong>10.0</strong></td>
+                <td>50 meters of 10mm single wire for inverter input and output</td>
+                <td style="text-align: right;">₦2,500 / m</td>
+                <td style="text-align: right; font-weight: 700;">₦125,000</td>
+              </tr>
+              <tr>
+                <td style="text-align: center;"><strong>11.0</strong></td>
+                <td>2.5mm single wire for earthing</td>
+                <td style="text-align: right;">₦30,000</td>
+                <td style="text-align: right; font-weight: 700;">₦30,000</td>
+              </tr>
+              <tr>
+                <td style="text-align: center;"><strong>12.0</strong></td>
+                <td>1pcs of 4ft earth rod and accessories</td>
+                <td style="text-align: right;">₦40,000</td>
+                <td style="text-align: right; font-weight: 700;">₦40,000</td>
+              </tr>
+              <tr>
+                <td style="text-align: center;"><strong>13.0</strong></td>
+                <td>Logistics</td>
+                <td style="text-align: right;">₦70,000</td>
+                <td style="text-align: right; font-weight: 700;">₦70,000</td>
+              </tr>
+              <tr>
+                <td style="text-align: center;"><strong>14.0</strong></td>
+                <td>Installation Fee</td>
+                <td style="text-align: right;">₦700,000</td>
+                <td style="text-align: right; font-weight: 700;">₦700,000</td>
+              </tr>
+              <tr style="background: var(--bg-subtle); border-top: 3px solid var(--primary);">
+                <td colspan="2" style="text-align: right; font-size: 1.1rem; font-weight: 800; color: var(--text-main);">TOTAL TURNKEY SYSTEM COST:</td>
+                <td colspan="2" style="text-align: right; font-size: 1.35rem; font-weight: 800; color: var(--solar);">₦9,850,000</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </div>
 
