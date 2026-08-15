@@ -23,11 +23,30 @@ const SimulatorState = {
   expectedKW: 9.6
 };
 
+// Interactive BOQ (Bill of Quantity) State
+const BOQState = [
+  { id: 1, name: "DEYE 12KW Solar Hybrid inverter", qty: 1, rate: 2800000 },
+  { id: 2, name: "DEYE 16KWH Lithium battery", qty: 1, rate: 2700000 },
+  { id: 3, name: "Jinko 620W Monocrystalline Solar panels", qty: 20, rate: 145000 },
+  { id: 4, name: "Solar mounting accessories (aluminium profiles, bolts & nuts)", qty: 1, rate: 80000 },
+  { id: 5, name: "AC breakers and surge protector with enclosure", qty: 1, rate: 50000 },
+  { id: 6, name: "DC breakers and surge protector with enclosure", qty: 1, rate: 50000 },
+  { id: 7, name: "Heat aerosol fire breakers", qty: 2, rate: 10000 },
+  { id: 8, name: "Automatic fire off ball extinguisher", qty: 1, rate: 20000 },
+  { id: 9, name: "DC solar cable 10mm (1000VDC rating) (meters)", qty: 50, rate: 5500 },
+  { id: 10, name: "Single wire 10mm for inverter input/output (meters)", qty: 50, rate: 2500 },
+  { id: 11, name: "Single wire 2.5mm for earthing", qty: 1, rate: 30000 },
+  { id: 12, name: "Earth rod 4ft and accessories", qty: 1, rate: 40000 },
+  { id: 13, name: "Logistics & Delivery", qty: 1, rate: 70000 },
+  { id: 14, name: "Installation Fee & Commissioning", qty: 1, rate: 700000 }
+];
+
 let lastCalculatedData = null;
 
 document.addEventListener('DOMContentLoaded', () => {
   initPresetDropdown();
   renderPhotorealisticRack();
+  renderBOQTable();
   
   // Attach live calculation listener to all inputs
   const allInputs = document.querySelectorAll('input, select');
@@ -39,6 +58,76 @@ document.addEventListener('DOMContentLoaded', () => {
   // Calculate immediately on startup
   calculateAll();
 });
+
+/* BOQ Interactive Dynamic Functions */
+window.renderBOQTable = function() {
+  const tbody = document.getElementById('boq-tbody');
+  const totalCell = document.getElementById('boq-grand-total');
+  if (!tbody) return;
+
+  let grandTotal = 0;
+
+  tbody.innerHTML = BOQState.map((item, idx) => {
+    const lineTotal = (item.qty || 0) * (item.rate || 0);
+    grandTotal += lineTotal;
+
+    return `
+      <tr>
+        <td style="text-align: center; font-weight: 800; color: var(--text-muted);">${idx + 1}.0</td>
+        <td>
+          <input type="text" class="form-input-clean" value="${item.name.replace(/"/g, '&quot;')}" onchange="updateBOQItem(${idx}, 'name', this.value)" style="padding: 0.25rem 0.45rem; font-weight: 700;" />
+        </td>
+        <td style="text-align: center;">
+          <input type="number" class="form-input-clean" min="0" value="${item.qty}" onchange="updateBOQItem(${idx}, 'qty', this.value)" style="width: 80px; text-align: center; padding: 0.25rem; font-weight: 800; color: var(--primary);" />
+        </td>
+        <td style="text-align: right;">
+          <input type="number" class="form-input-clean" min="0" value="${item.rate}" onchange="updateBOQItem(${idx}, 'rate', this.value)" style="width: 130px; text-align: right; padding: 0.25rem; font-weight: 700;" />
+        </td>
+        <td style="text-align: right; font-weight: 800; color: var(--solar); vertical-align: middle;">
+          ₦${lineTotal.toLocaleString('en-NG')}
+        </td>
+        <td style="text-align: center; vertical-align: middle;">
+          <button onclick="removeBOQRow(${idx})" class="btn-delete-panel" title="Remove Item" style="padding: 0.2rem 0.4rem; font-size: 0.8rem;">🗑️</button>
+        </td>
+      </tr>
+    `;
+  }).join('');
+
+  if (totalCell) {
+    totalCell.textContent = `₦${grandTotal.toLocaleString('en-NG')}`;
+  }
+
+  // Sync BOQ grandTotal into solar Capex for live financial analysis
+  SimulatorState.boqTotal = grandTotal;
+};
+
+window.updateBOQItem = function(index, field, value) {
+  if (!BOQState[index]) return;
+  if (field === 'qty' || field === 'rate') {
+    BOQState[index][field] = Math.max(0, parseFloat(value) || 0);
+  } else {
+    BOQState[index][field] = value;
+  }
+  renderBOQTable();
+  calculateAll();
+};
+
+window.addBOQRow = function() {
+  const newId = BOQState.length + 1;
+  BOQState.push({ id: newId, name: "New Equipment / Accessory", qty: 1, rate: 0 });
+  renderBOQTable();
+  calculateAll();
+};
+
+window.removeBOQRow = function(index) {
+  if (BOQState.length <= 1) {
+    alert("At least 1 item must remain in the Bill of Quantities.");
+    return;
+  }
+  BOQState.splice(index, 1);
+  renderBOQTable();
+  calculateAll();
+};
 
 /* View Navigation & Mobile Hamburger Controls */
 window.switchView = function(viewId) {
@@ -360,8 +449,8 @@ function calculateAll() {
   const dieselPrice = 2100;   // ₦2,100 per Litre
 
   // Capital Costs:
-  // For 10-12kW array, turnkey PV subsystem = ₦9,850,000 (scaled by capacity)
-  const solarCapex = Math.round((installedKW / 12.0) * 9850000);
+  // Turnkey PV subsystem is linked to interactive BOQ Grand Total (defaulting to ₦9,850,000)
+  const solarCapex = SimulatorState.boqTotal || Math.round((installedKW / 12.0) * 9850000);
   const solarOM = Math.round(90000); // dry season cleaning + quarterly inspections
   const batteryRepCost = Math.round(solarCapex * 0.35);
 
