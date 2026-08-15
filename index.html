@@ -28,12 +28,26 @@
       </div>
 
       <div class="header-actions">
+        <button id="btn-install-pwa" class="btn btn-secondary no-print" onclick="installPWA()" style="display: none; background: #0284c7; color: white;">
+          📲 Install App
+        </button>
         <button class="btn btn-primary no-print" onclick="window.print()">
           🖨️ Print / Save PDF Report
         </button>
       </div>
     </div>
   </header>
+
+  <!-- PWA Install Floating Banner -->
+  <div id="pwa-install-banner" class="pwa-banner no-print">
+    <div class="pwa-banner-content">
+      <span>📲 <strong>Install SolarCalc Pro</strong> for quick offline access on your phone or desktop.</span>
+      <div class="pwa-banner-actions">
+        <button onclick="installPWA()" class="btn btn-sm btn-primary">Install Now</button>
+        <button onclick="document.getElementById('pwa-install-banner').classList.remove('show')" class="btn btn-sm btn-outline">Later</button>
+      </div>
+    </div>
+  </div>
 
   <!-- Main Container -->
   <main class="container">
@@ -478,6 +492,7 @@
     </div>
   </footer>
 
+  <script src="./js/pwa.js"></script>
   <script src="./js/app.js?v=8.0.0"></script>
 </body>
 </html>

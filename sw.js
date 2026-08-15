@@ -1,5 +1,5 @@
 // LCCA Software Service Worker - Network First Strategy
-const CACHE_NAME = 'lcca-nigeria-v4.0.0';
+const CACHE_NAME = 'lcca-nigeria-v4.1.0';
 const ASSETS_TO_CACHE = [
   './',
   './index.html',
@@ -8,7 +8,12 @@ const ASSETS_TO_CACHE = [
   './css/main.css',
   './css/components.css',
   './css/print.css',
-  './js/app.js'
+  './js/app.js',
+  './js/pwa.js',
+  './js/data.js',
+  './js/lcca.js',
+  './js/sizing.js',
+  './js/report.js'
 ];
 
 self.addEventListener('install', (event) => {
