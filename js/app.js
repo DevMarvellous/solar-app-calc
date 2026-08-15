@@ -192,7 +192,17 @@ function renderPhotorealisticRack() {
 }
 
 window.addSinglePanel = function(watts) {
-  const w = parseInt(watts) || SimulatorState.activeGlobalWattage || 600;
+  let w = watts;
+  if (!w && w !== 0) {
+    const defaultW = SimulatorState.activeGlobalWattage || 600;
+    const input = prompt("Enter solar panel rating in Watts (e.g., 400, 550, 600, 700, 1000):", defaultW);
+    if (input === null) return; // User cancelled
+    w = parseInt(input, 10);
+    if (isNaN(w) || w <= 0) {
+      alert("Please enter a valid positive panel wattage.");
+      return;
+    }
+  }
   const newId = SimulatorState.panels.length > 0 ? (SimulatorState.panels[SimulatorState.panels.length - 1].id + 1) : 1;
   SimulatorState.panels.push({ id: newId, watts: w });
   renderPhotorealisticRack();
